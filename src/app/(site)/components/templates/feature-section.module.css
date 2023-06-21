@@ -1,0 +1,23 @@
+.featureGridContainer {
+    @apply gap-x-8 gap-y-10 lg:gap-y-16
+}
+
+.featureGridWrap {
+    @apply mx-auto
+}
+
+.featureCard {
+    @apply flex items-center gap-x-3 font-semibold leading-7 text-lg
+}
+
+.featureCardContainer {
+    @apply flex flex-col
+}
+
+.featureCardContent {
+    @apply mt-4 flex flex-auto flex-col text-base leading-7
+}
+
+.featureCardCta {
+    @apply text-sm font-semibold leading-6
+}

@@ -1,0 +1,3 @@
+.ctaTextImageWrapper {
+    @apply overflow-hidden lg:flex items-center lg:gap-x-20
+}

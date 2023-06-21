@@ -1,0 +1,13 @@
+/* SOCIAL */
+
+.socialComponent {
+  @apply flex space-x-3
+}
+
+.socialComponent a {
+    @apply inline-block mr-2 text-2xl;
+  }
+
+.socialComponent svg {
+  color: var(--primary-accent);
+}

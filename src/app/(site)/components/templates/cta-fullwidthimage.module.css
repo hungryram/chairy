@@ -1,0 +1,7 @@
+.fullWidthWrapper {
+    @apply relative lg:flex items-center
+}
+
+.ctaContent {
+    @apply lg:w-1/2 mx-auto lg:mx-0 lg:flex-auto pb-10 text-left
+}

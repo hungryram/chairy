@@ -1,0 +1,11 @@
+.heroInnerContainer {
+    @apply py-32 sm:py-48 lg:py-56 relative
+}
+
+.heroImage {
+    @apply absolute inset-0 -z-10 h-full w-full object-cover
+}
+
+.heroImageFullScreen {
+    @apply absolute inset-0 -z-10 h-screen w-full object-cover
+}

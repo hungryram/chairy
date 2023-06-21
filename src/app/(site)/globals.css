@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--body-font);
+  background-color: var(--website-body-color);
+  color: var(--website-text-color, #525252);
+  font-size: 16px;
+}
+
+.section {
+  @apply py-20
+}
+
+.container {
+  @apply px-4
+}
+
+.accent {
+  color: var(--primary-accent)
+}
+
+.bg-accent {
+  background-color: var(--primary-button-background);
+}
+
+.primary-button {
+  @apply px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+  background-color: var(--primary-button-background);
+  color: var(--primary-button-text);
+  border-radius: var(--button-radius);
+  padding-left: var(--button-x-padding);
+  padding-right: var(--button-x-padding);
+  padding-top: var(--button-y-padding);
+  padding-bottom: var(--button-y-padding);}
+
+.secondary-button {
+  @apply px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+  background-color: var(--secondary-button-background);
+  color: var(--secondary-button-text);
+  border-radius: var(--button-radius);
+  padding-left: var(--button-x-padding);
+  padding-right: var(--button-x-padding);
+  padding-top: var(--button-y-padding);
+  padding-bottom: var(--button-y-padding);
+}
+
+/* CONTENT */
+body .content h1, 
+body .content h2, 
+body .content h3, 
+body .content h4, 
+body .content h5, 
+body .content h6 {
+  @apply leading-snug font-medium mb-6 mt-2;
+  color: var(--website-heading-color, #000);
+}
+
+.content h1 {
+  @apply md:text-5xl text-3xl;
+}
+
+.content h2 {
+  @apply md:text-4xl text-3xl;
+}
+
+.content h3 {
+  @apply md:text-2xl text-lg;
+}
+
+.content h4 {
+  @apply text-lg;
+}
+
+.content p + p {
+  @apply mb-8;
+}
+
+.content p {
+  @apply leading-7
+}
+
+.content ul {
+  @apply my-2 list-disc ml-8;
+}
+
+.content ol {
+  @apply my-2 list-decimal ml-8
+}
+
+.content li {
+  @apply my-1;
+}
+
+.swiper-button-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/*  FORM  */
+
+input[type="radio"]:checked:focus {
+  background-color: var(--radio-color);
+}
+
+input[type="radio"]:checked:hover {
+  background-color: var(--radio-color);
+  @apply outline-none
+
+}
+
+
+input[type="radio"]:checked {
+  /* Change the background color of the radio button circle when checked */
+  background-color: var(--radio-color);
+  background-image: none;
+  @apply outline-none
+
+}
+
+.slide-up {
+  transform: translateY(-100%);
+}
+
+.slide-down {
+  transform: translateY(0%);
+}

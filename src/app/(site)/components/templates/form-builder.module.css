@@ -1,0 +1,12 @@
+.formLabel {
+    @apply block text-sm font-medium leading-6
+}
+
+.formDefaultInput {
+    @apply border rounded-sm px-3 py-2 w-full bg-gray-100;
+    border-color: #ccc;
+}
+
+.formInputList {
+    @apply block text-sm font-medium leading-6 text-gray-900
+}
