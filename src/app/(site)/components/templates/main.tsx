@@ -28,6 +28,7 @@ import HeroBasic from "./hero-basic";
 import DisclosureSeparate from "./disclosure-separate";
 import TestimonialsColumn from "./testimonials-column";
 import LeadFormTwoColumn from "./leadform-two-column";
+import HeroCustom from "./hero-custom";
 
 interface Props {
     pageBuilder: any[];
@@ -212,6 +213,18 @@ export default function Main({
                             }
                             {section?.layoutType === "basic" &&
                                 <HeroBasic
+                                    key={section?._key}
+                                    content={section?.content}
+                                    image={section?.imageData?.asset?.url}
+                                    altText={section?.imageData?.asset?.altText}
+                                    blurData={section?.imageData?.asset?.lqip}
+                                    textAlign={section?.textAlign}
+                                    textColor={section?.textColor?.hex}
+                                    {...settingsSchema}
+                                />
+                            }
+                            {section?.layoutType === "heroCustom" &&
+                                <HeroCustom
                                     key={section?._key}
                                     content={section?.content}
                                     image={section?.imageData?.asset?.url}

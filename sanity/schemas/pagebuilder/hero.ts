@@ -20,6 +20,7 @@ export default defineType({
                     { title: "Static Hero", value: "static" },
                     { title: "Side by Side", value: "sideByside" },
                     { title: "Basic", value: "basic" },
+                    { title: "Custom", value: "heroCustom" },
                 ],
             },
             initialValue: "static"

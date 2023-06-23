@@ -92,7 +92,7 @@ export default defineType({
                     name: 'xPadding',
                     description: 'padding to the left and right of the button',
                     type: 'number',
-                    validation: Rule => Rule.error().min(5).max(20)
+                    validation: Rule => Rule.error().min(5).max(100)
                 },
                 {
                     title: 'Y Axis Padding',

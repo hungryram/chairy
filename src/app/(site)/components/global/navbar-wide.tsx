@@ -19,6 +19,7 @@ export default function NavbarWide({
     ctaLink,
     mobileLogoWidth,
     hideCta,
+    enableTransparent
 }: NavbarProps) {
 
     const ctaLinking =
@@ -45,7 +46,7 @@ export default function NavbarWide({
                             </div>
                         </div>
                     }
-                    <div className="mx-auto px-2 sm:px-6 lg:px-8">
+                    <div className={`${enableTransparent ? 'absolute left-0 right-0 z-50 top-0' : 'shadow'}`}>
                         <div className="relative flex items-center justify-between">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
