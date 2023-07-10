@@ -93,6 +93,18 @@ export default defineType({
                             },
                         },
                         {
+                            title: 'Display Inline',
+                            description: 'Makes button display next to field. Useful for newsletter or signups',
+                            name: 'inlineEmail',
+                            type: 'boolean',
+                            hidden: ({ parent }) => parent?.type !== "email",
+                        },
+                        {
+                            title: 'Hide Label',
+                            name: 'hideLabel',
+                            type: 'boolean',
+                        },
+                        {
                             title: 'Required',
                             name: 'required',
                             type: 'boolean'
@@ -139,6 +151,11 @@ export default defineType({
             title: 'Form Disclaimer',
             name: 'formDisclaimer',
             type: 'contentEditor',
+        },
+        {
+            title: 'Make Stacked',
+            name: 'makeStacked',
+            type: 'boolean',
         },
     ],
 })

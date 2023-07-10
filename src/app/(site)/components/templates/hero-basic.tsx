@@ -31,47 +31,34 @@ export default function HeroBasic({
     textColor,
 }: Props) {
     return (
-        <div className="relative bg-white">
-            <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
-                <div className="px-6 pb-24 pt-10 sm:pb-32 lg:col-span-7 lg:px-0 lg:pb-56 lg:pt-48 xl:col-span-6">
-                    {(content || primaryButtonLink || secondaryButtonLink) && (
-                        <div className={`mx-auto max-w-2xl lg:mx-0`}>
-                            <div style={{
-                                color: textColor
-                            }}>
-
-                                <HeaderSection
-                                    content={content}
-                                    textAlign={textAlign}
-                                    // PRIMARY
-                                    buttonLink={primaryButtonLink}
-                                    primaryButtonText={primaryButtonText}
-                                    primaryButtonStyle={primaryButtonStyle}
-                                    // SECONDARY
-                                    secondaryButtonLink={secondaryButtonLink}
-                                    secondaryButtonText={secondaryButtonText}
-                                    secondaryButtonStyle={secondaryButtonStyle}
-                                />
-                            </div>
-                        </div>
-                    )
-                    }
-                </div>
-                <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
-                    {image &&
-                        <Image
-                            src={image}
-                            alt={altText}
-                            placeholder={blurData ? 'blur' : 'empty'}
-                            blurDataURL={blurData}
-                            className="aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-                            priority={true}
-                            width={2000}
-                            height={1080}
-                        />
-                    }
-                </div>
+        <div className="mt-32 sm:mt-56">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl sm:text-center">
+              <h2 className="text-base font-semibold leading-7 text-indigo-400">Everything you need</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">No server? No problem.</p>
+              <p className="mt-6 text-lg leading-8 text-gray-300">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque,
+                iste dolor cupiditate blanditiis.
+              </p>
             </div>
+          </div>
+          <div className="relative overflow-hidden pt-16">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <Image
+                src={image}
+                alt="App screenshot"
+                className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-white/10"
+                width={2432}
+                height={1442}
+              />
+              <div className="relative" aria-hidden="true">
+                <div className="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-gray-900 pt-[7%]" />
+              </div>
+            </div>
+          </div>
+          <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+
+          </div>
         </div>
     )
 }

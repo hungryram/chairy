@@ -76,7 +76,7 @@ export default function Footer({
 }: Props) {
   return (
     <footer className={Styles.footer} aria-labelledby="footer-heading">
-      <div className="section">
+      <div className="pt-20 pb-8">
         <div className="container">
           {singleColumn !== true ?
             <div className={`lg:flex md:grid md:grid-cols-3 grid-cols-1 xl:gap-8 gap-y-10 space-y-10 items-baseline`}>
@@ -115,71 +115,6 @@ export default function Footer({
                     zillow={zillow}
                     size={size}
                   />
-                </div>
-              </div>
-              <div className=" flex-1">
-                <div>
-                  <h3>Contact Information</h3>
-                  <dl className="space-y-4 text-base leading-7">
-                    {address || city || state || zip_code ? (
-                      <div className={Styles.contactInfo}>
-                        <dt className="flex-none">
-                          <span>Address</span>
-                        </dt>
-                        <dd className="text-sm leading-6">
-                          {address && (
-                            <>
-                              {address}
-                              <br />
-                            </>
-                          )}
-                          {city && (
-                            <>
-                              {city ? city + ',' : ''}
-                            </>
-                          )}{' '}
-                          {state} {zip_code}
-                        </dd>
-                      </div>
-                    ) : null}
-
-                    {phone_number &&
-                      <div className={Styles.contactInfo}>
-                        <dt className="flex-none">
-                          <span>Direct</span>
-                        </dt>
-                        <dd>
-                          <a className="text-sm leading-6" href={`tel:${phone_number}`}>
-                            {phone_number}
-                          </a>
-                        </dd>
-                      </div>
-                    }
-                    {office_number &&
-                      <div className={Styles.contactInfo}>
-                        <dt className="flex-none">
-                          <span>Phone</span>
-                        </dt>
-                        <dd>
-                          <a className="text-sm leading-6" href={`tel:${office_number}`}>
-                            {office_number}
-                          </a>
-                        </dd>
-                      </div>
-                    }
-                    {email &&
-                      <div className={Styles.contactInfo}>
-                        <dt className="flex-none">
-                          <span>Email</span>
-                        </dt>
-                        <dd>
-                          <a className="text-sm leading-6" href={`mailto:${email}`}>
-                            {email}
-                          </a>
-                        </dd>
-                      </div>
-                    }
-                  </dl>
                 </div>
               </div>
               {links &&
@@ -302,52 +237,7 @@ export default function Footer({
               </div>
             </div>
           }
-          <div className="border-t border-white/10 pt-8 mt-12">
-            {singleColumn &&
-              <div className="leading-7 md:flex items-center text-sm md:space-x-10">
-                {address || city || state || zip_code ? (
-                  <div className="space-x-2">
-                    <span>Address:</span>
-                    {address && (
-                      <>
-                        {address}
-                      </>
-                    )}
-                    {city && (
-                      <>
-                        {city ? city + ',' : ''}
-                      </>
-                    )}{' '}
-                    {state} {zip_code}
-                  </div>
-                ) : null}
-
-                {phone_number &&
-                  <div className="space-x-2">
-                    <span>Direct:</span>
-                    <a href={`tel:${phone_number}`}>
-                      {phone_number}
-                    </a>
-                  </div>
-                }
-                {office_number &&
-                  <div className="space-x-2">
-                    <span>Phone:</span>
-                    <a href={`tel:${office_number}`}>
-                      {office_number}
-                    </a>
-                  </div>
-                }
-                {email &&
-                  <div className="space-x-2">
-                    <span>Email:</span>
-                    <a href={`mailto:${email}`}>
-                      {email}
-                    </a>
-                  </div>
-                }
-              </div>
-            }
+          <div className="border-t border-white/10 pt-4 mt-12">
             {footerDisclaimer &&
               <div className="text text-xs my-2">
                 <ContentEditor
@@ -366,7 +256,14 @@ export default function Footer({
                 ))}
               </ul>
             }
-            <p className="text-xs font-light pt-0">&copy; Copyright {new Date().getFullYear()} &middot; {company_name} &middot; Website built by <a href="https://www.hungryram.com/" className="font-bold" target="_blank">Hungry Ram</a></p>
+            <div className="lg:flex">
+              <div className="lg:w-1/2">
+                <p className="text-xs font-light pt-0">&copy; Copyright {new Date().getFullYear()} &middot; {company_name}</p>
+              </div>
+              <div className="lg:text-right lg:w-1/2">
+                <p className="text-xs">Designed by <a href="https://www.hungryram.com/" className="font-bold" target="_blank">Hungry Ram</a></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

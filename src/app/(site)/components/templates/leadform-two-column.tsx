@@ -56,7 +56,7 @@ export default function LeadFormTwoColumn({
                                 secondaryButtonStyle={secondaryButtonStyle}
                             />
                         )}
-                        <div className={`${content && 'mt-16'}`}>
+                        <div className="content">
                             <FormBuilder
                                 formSchema={formSchema}
                             />

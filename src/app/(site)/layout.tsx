@@ -5,7 +5,7 @@ import './globals.css'
 import { appearance, mainLayoutProfile } from '../../../lib/groq-data'
 import { Metadata } from 'next';
 import GoogleAnalytics from './components/global/analytics'
-import { interFont } from '../fonts'
+import { interFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
 import NavbarWide from './components/global/navbar-wide'
 
@@ -133,7 +133,7 @@ export default async function RootLayout({
       {data?.profileSettings?.settings?.googleID &&
         <GoogleAnalytics GA_TRACKING_ID={data?.profileSettings?.settings?.googleID} />
       }
-      <body className={interFont.variable}>
+      <body className={`${interFont.variable} ${headingFont.variable}`}>
         {data?.profileSettings?.settings?.facebookPixel &&
           <Pixel
             facebookPixel={data?.profileSettings?.settings?.facebookPixel}

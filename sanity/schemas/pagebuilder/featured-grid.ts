@@ -32,6 +32,13 @@ export default defineType({
             group: 'content'
         },
         {
+            title: 'End Content',
+            name: 'secondContent',
+            type: 'contentEditor',
+            group: 'content',
+            hidden: ({ parent }) => parent?.layoutType !== 'featuredBox'
+        },
+        {
             title: 'Text Align',
             name: 'textAlign',
             type: 'string',

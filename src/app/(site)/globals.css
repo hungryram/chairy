@@ -7,6 +7,7 @@ body {
   background-color: var(--website-body-color);
   color: var(--website-text-color, #525252);
   font-size: 16px;
+  font-weight: 500;
 }
 
 .section {
@@ -53,12 +54,17 @@ body .content h3,
 body .content h4, 
 body .content h5, 
 body .content h6 {
-  @apply leading-snug font-semibold mb-6 mt-2;
+  @apply !leading-none font-bold mb-6 mt-2;
   color: var(--website-heading-color, #000);
+  font-family: var(--heading-font);
+}
+
+.content strong {
+  color: #fff;
 }
 
 .content h1 {
-  @apply md:text-5xl text-3xl;
+  @apply md:text-7xl text-5xl;
 }
 
 .content h2 {
@@ -125,4 +131,13 @@ input[type="radio"]:checked {
 
 .slide-down {
   transform: translateY(0%);
+}
+
+.gradient-accent {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(-45deg,#fdaf6b,#EE4C2C,#f99843,#EE4C2C);
+  -webkit-background: linear-gradient(-45deg,#fdaf6b,#EE4C2C,#f99843,#EE4C2C);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 300%;
 }

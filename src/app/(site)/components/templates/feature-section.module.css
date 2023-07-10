@@ -21,3 +21,9 @@
 .featureCardCta {
     @apply text-sm font-semibold leading-6
 }
+
+.featuredBorder {
+    border: 1px solid transparent;
+    border-image: linear-gradient(to bottom, #aaaaaa, #2d2d2d) 1;
+    padding: 10px;
+}

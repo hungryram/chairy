@@ -232,6 +232,7 @@ export default function Main({
                                     blurData={section?.imageData?.asset?.lqip}
                                     textAlign={section?.textAlign}
                                     textColor={section?.textColor?.hex}
+                                    formBuilder={section?.formBuilder}
                                     {...settingsSchema}
                                 />
                             }
@@ -439,6 +440,7 @@ export default function Main({
                                     blocks={section?.childBlocks}
                                     content={section?.content}
                                     textAlign={section?.textAlign}
+                                    secondContent={section?.secondContent}
                                     {...settingsSchema}
                                 />
                             }

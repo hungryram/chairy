@@ -1,10 +1,10 @@
 .formLabel {
-    @apply block text-sm font-medium leading-6
+    @apply block text-sm font-medium leading-6 mt-4
 }
 
 .formDefaultInput {
-    @apply border rounded-sm px-3 py-2 w-full bg-gray-100;
-    border-color: #ccc;
+    @apply rounded-sm px-3 py-2 w-full bg-white/5 border-0 text-white shadow-sm ring-1 ring-inset ring-white/10;
+    border-radius: var(--button-radius);
 }
 
 .formInputList {

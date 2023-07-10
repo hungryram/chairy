@@ -43,6 +43,11 @@ export default defineType({
     paddingTop,
     paddingBottom,
     {
+      title: 'ID',
+      name: 'id',
+      type: 'string'
+    },
+    {
       title: 'Form Builder',
       name: 'formBuilder',
       type: 'formBuilder'
