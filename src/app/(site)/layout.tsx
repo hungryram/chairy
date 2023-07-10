@@ -156,7 +156,7 @@ export default async function RootLayout({
                   --primary-accent: ${data.appearances?.primaryAccent ?? '#cccccc'};
                   --radio-color: ${data.appearances?.primaryAccent ?? '#cccccc'};
 
-                  --footer-background-color: ${data.appearances?.footerBg ?? '#0d1321'};
+                  --footer-background-color: ${data.appearances?.footerBg ?? 'transparent'};
                   --footer-header-color: ${data.appearances?.footerHeader ?? '#ffffff'};
                   --footer-text-color: ${data.appearances?.footerText ?? '#9b9b9b'};
                   --primary-button-background: ${data.appearances?.primaryButtonBg ?? 'transparent'};
