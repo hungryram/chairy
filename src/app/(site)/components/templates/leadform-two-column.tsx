@@ -39,7 +39,7 @@ export default function LeadFormTwoColumn({
     const allStyles = { ...backgroundStyles, ...styles }
 
     return (
-        <div style={allStyles}>
+        <div style={allStyles} id="inquire">
             <div className="container">
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-10">
                         {(content || primaryButtonLink || secondaryButtonLink) && (

@@ -43,9 +43,9 @@ export default function CalltoActionTextImage({
     const styles = {
         paddingTop: paddingTop ?? '5rem',
         paddingBottom: paddingBottom ?? '5rem',
-      }
-    
-      const allStyles = { ...backgroundStyles, ...styles }
+    }
+
+    const allStyles = { ...backgroundStyles, ...styles }
 
     return (
         <div style={allStyles}>
@@ -67,8 +67,8 @@ export default function CalltoActionTextImage({
                             />
                         )}
                     </div>
-                    <div className="lg:w-1/2">
-                        {image ?
+                    <div className="lg:w-1/2 relative">
+                        {image &&
                             <Image
                                 src={image}
                                 alt={altText}
@@ -77,9 +77,17 @@ export default function CalltoActionTextImage({
                                 width={1824}
                                 height={1080}
                             />
-                            :
-                            <img src={ctaData.image} alt="placeholder" />
                         }
+                        <div className="absolute inset-x-0 bottom-1/2 -z-10 transform-gpu left-0 right-0 flex justify-center" aria-hidden="true">
+                            <div className="relative">
+                                <div
+                                    className="w-96 h-48 rounded-full bg-gradient-to-tr from-[#fbfbfb] to-[#ffffff] opacity-20 backdrop-filter blur-3xl"
+                                />
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>

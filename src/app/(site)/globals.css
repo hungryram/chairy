@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--body-font);
   background-color: var(--website-body-color);
@@ -80,11 +84,12 @@ body .content h6 {
 }
 
 .content p + p {
-  @apply mb-8;
+  @apply mt-6;
 }
 
 .content p {
-  @apply leading-7
+  @apply leading-7;
+  margin: 0 0 14px;
 }
 
 .content ul {
