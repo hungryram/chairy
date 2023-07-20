@@ -2,6 +2,7 @@ import Styles from "./feature-section.module.css"
 import * as HeroIcons from '@heroicons/react/24/outline';
 import HeaderSection from "./header-section";
 import Link from "next/link";
+import Animate from "./animate";
 
 interface Props {
     backgroundStyles: any;
@@ -51,79 +52,83 @@ export default function FeaturedGridBox({
     return (
         <div className={`${offsetTop && '-mt-32 relative'}`} style={allStyles}>
             <div className={`container`}>
-                {(content || primaryButtonLink || secondaryButtonLink) && (
-                    <HeaderSection
-                        content={content}
-                        textAlign={textAlign}
-                        // PRIMARY
-                        buttonLink={primaryButtonLink}
-                        primaryButtonText={primaryButtonText}
-                        primaryButtonStyle={primaryButtonStyle}
-                        // SECONDARY
-                        secondaryButtonLink={secondaryButtonLink}
-                        secondaryButtonText={secondaryButtonText}
-                        secondaryButtonStyle={secondaryButtonStyle}
-                    />
-                )}
+                <Animate>
+                    {(content || primaryButtonLink || secondaryButtonLink) && (
+                        <HeaderSection
+                            content={content}
+                            textAlign={textAlign}
+                            // PRIMARY
+                            buttonLink={primaryButtonLink}
+                            primaryButtonText={primaryButtonText}
+                            primaryButtonStyle={primaryButtonStyle}
+                            // SECONDARY
+                            secondaryButtonLink={secondaryButtonLink}
+                            secondaryButtonText={secondaryButtonText}
+                            secondaryButtonStyle={secondaryButtonStyle}
+                        />
+                    )}
+                </Animate>
                 <div className={Styles.featureGridWrap}>
                     <div className="lg:flex justify-center">
                         <div className="lg:w-3/4">
-                            <dl className={`grid rounded-sm grid-cols-1 lg:grid-cols-${columnNumber} ${content && 'mt-16'} ${Styles.featuredBorder}`} style={{
-                                backgroundColor: gridBackgroundColor
-                            }}>
-                                {blocks?.map((node: any) => {
+                            <Animate>
+                                <dl className={`grid rounded-sm grid-cols-1 lg:grid-cols-${columnNumber} ${content && 'mt-16'} ${Styles.featuredBorder}`} style={{
+                                    backgroundColor: gridBackgroundColor
+                                }}>
+                                    {blocks?.map((node: any) => {
 
-                                    const IconComponent = HeroIcons[node.icon as keyof typeof HeroIcons];
-                                    const blockLink: any = node?.blockLinking?.internalLink
-                                    const linkUrl =
-                                        (blockLink?._type === "pages" && `/${node.blockLinking?.internalLink.slug}`) ||
-                                        (blockLink?._type === "blog" && `/blog/${node.blockLinking?.internalLink.slug}`) ||
-                                        (blockLink?._type === "legal" && `/legal/${node.blockLinking?.internalLink.slug}`) ||
-                                        (blockLink?._type === "services" && `/services/${node.blockLinking?.internalLink.slug}`) ||
-                                        (blockLink?._type === "team" && `/team/${node.blockLinking?.internalLink.slug}`) ||
-                                        (blockLink?._type === "team" && `/team/${node.blockLinking?.internalLink.slug}`) ||
-                                        (node.blockLinking?.externalUrl && `${node.blockLinking?.externalUrl}`);
-                                    return (
-                                        <div key={node._key} className={`${Styles.featureCardContainer} p-10`}>
-                                            <dt className={`${Styles.featureCard}`} style={{
-                                                color: node?.headingColor?.hex
-                                            }}>
-                                                {IconComponent && (
-                                                    <IconComponent className="h-5 w-5 flex-none gradient-accent" style={{
-                                                        color: node?.iconColor?.hex
-                                                    }} aria-hidden="true" />
-                                                )}
-                                                {node.value}
-                                            </dt>
-                                            <dd className={Styles.featureCardContent}>
-                                                <p className="flex-auto" style={{
-                                                    color: node?.contentColor?.hex
-                                                }}>{node.content}</p>
-                                                {node?.button?.text &&
-                                                    <p className="mt-6">
-                                                        <Link href={linkUrl ?? '/'} className={`${Styles.featureCardCta}`} aria-label={`Link to ${node?.value}`} style={{
-                                                            color: node?.linkColor?.hex
-                                                        }}>
-                                                            {node?.button?.text} <span aria-hidden="true">→</span>
-                                                        </Link>
-                                                    </p>
-                                                }
-                                            </dd>
+                                        const IconComponent = HeroIcons[node.icon as keyof typeof HeroIcons];
+                                        const blockLink: any = node?.blockLinking?.internalLink
+                                        const linkUrl =
+                                            (blockLink?._type === "pages" && `/${node.blockLinking?.internalLink.slug}`) ||
+                                            (blockLink?._type === "blog" && `/blog/${node.blockLinking?.internalLink.slug}`) ||
+                                            (blockLink?._type === "legal" && `/legal/${node.blockLinking?.internalLink.slug}`) ||
+                                            (blockLink?._type === "services" && `/services/${node.blockLinking?.internalLink.slug}`) ||
+                                            (blockLink?._type === "team" && `/team/${node.blockLinking?.internalLink.slug}`) ||
+                                            (blockLink?._type === "team" && `/team/${node.blockLinking?.internalLink.slug}`) ||
+                                            (node.blockLinking?.externalUrl && `${node.blockLinking?.externalUrl}`);
+                                        return (
+                                            <div key={node._key} className={`${Styles.featureCardContainer} p-10`}>
+                                                <dt className={`${Styles.featureCard}`} style={{
+                                                    color: node?.headingColor?.hex
+                                                }}>
+                                                    {IconComponent && (
+                                                        <IconComponent className="h-5 w-5 flex-none gradient-accent" style={{
+                                                            color: node?.iconColor?.hex
+                                                        }} aria-hidden="true" />
+                                                    )}
+                                                    {node.value}
+                                                </dt>
+                                                <dd className={Styles.featureCardContent}>
+                                                    <p className="flex-auto" style={{
+                                                        color: node?.contentColor?.hex
+                                                    }}>{node.content}</p>
+                                                    {node?.button?.text &&
+                                                        <p className="mt-6">
+                                                            <Link href={linkUrl ?? '/'} className={`${Styles.featureCardCta}`} aria-label={`Link to ${node?.value}`} style={{
+                                                                color: node?.linkColor?.hex
+                                                            }}>
+                                                                {node?.button?.text} <span aria-hidden="true">→</span>
+                                                            </Link>
+                                                        </p>
+                                                    }
+                                                </dd>
+                                            </div>
+                                        )
+                                    })}
+                                    <div className="my-10 text-center !font-light text-sm">
+                                        {(secondContent) && (
+                                            <HeaderSection
+                                                content={secondContent}
+                                                textAlign={textAlign}
+                                            />
+                                        )}
+                                        <div className="mt-10">
+                                            <Link href="/sign-up" className="primary-button" id="inquire">Sign Up</Link>
                                         </div>
-                                    )
-                                })}
-                                <div className="my-10 text-center !font-light text-sm">
-                                    {(secondContent) && (
-                                        <HeaderSection
-                                            content={secondContent}
-                                            textAlign={textAlign}
-                                        />
-                                    )}
-                                    <div className="mt-10">
-                                        <Link href="/contact" className="primary-button" id="inquire">Inquire</Link>
                                     </div>
-                                </div>
-                            </dl>
+                                </dl>
+                            </Animate>
                         </div>
                     </div>
                 </div>

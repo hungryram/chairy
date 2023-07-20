@@ -173,7 +173,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
             </>
           )}
           <div className="flex justify-end">
-            <button type="submit" className="primary-button mx-2" style={{
+            <button type="submit" className="primary-button ml-2 mb-2" style={{
               backgroundColor: formSchema?.buttonBackgroundColor?.hex,
               color: formSchema?.buttonTextColor?.hex
             }}>

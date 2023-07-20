@@ -76,28 +76,28 @@ export default async function BlogSlug({ params }: Props) {
         ...(post?.blog?._updatedAt && { "dateModified": post?.blog?._updatedAt }),
         ...(post?.blog?.seo?.meta_description && { "description": post?.blog?.seo?.meta_description }),
         "image": {
-          "@type": "ImageObject",
-          ...(postImage?.url && { "url": postImage?.url }),
+            "@type": "ImageObject",
+            ...(postImage?.url && { "url": postImage?.url }),
         },
         "author": {
-          "@type": "Person",
-          ...(post?.blog?.author?.name && { "name": post?.blog?.author?.name }),
+            "@type": "Person",
+            ...(post?.blog?.author?.name && { "name": post?.blog?.author?.name }),
         },
         "publisher": {
-          "@type": "Organization",
-          ...(post?.profileSettings?.company_name && { "name": post?.profileSettings?.company_name }),
-          ...(post?.profileSettings?.settings?.websiteName && { "url": post?.profileSettings?.settings?.websiteName }),
+            "@type": "Organization",
+            ...(post?.profileSettings?.company_name && { "name": post?.profileSettings?.company_name }),
+            ...(post?.profileSettings?.settings?.websiteName && { "url": post?.profileSettings?.settings?.websiteName }),
         },
-      };
-      
+    };
+
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
             />
-            <div className="bg-white px-6 py-32 lg:px-8">
-                <div className="mx-auto max-w-3xl leading-7 text-gray-800">
+            <div className="px-6 py-36 lg:px-8">
+                <div className="mx-auto max-w-3xl leading-7">
                     <div className="mb-10 text-center content">
                         <h1>{post?.blog?.title}</h1>
                         <time>{format(parseISO(post?.blog?.date), 'LLLL d, yyyy')}</time>
@@ -120,14 +120,16 @@ export default async function BlogSlug({ params }: Props) {
                             </div>
                         </div>
                     }
-                    <Image
-                        src={postImage?.url}
-                        alt={postImage?.altText}
-                        placeholder={postImage?.lqip ? 'blur' : 'empty'}
-                        blurDataURL={postImage?.lqip}
-                        width={1500}
-                        height={800}
-                    />
+                    {postImage?.url &&
+                        <Image
+                            src={postImage?.url}
+                            alt={postImage?.altText}
+                            placeholder={postImage?.lqip ? 'blur' : 'empty'}
+                            blurDataURL={postImage?.lqip}
+                            width={1500}
+                            height={800}
+                        />
+                    }
                     <div className="content">
                         <ContentEditor
                             content={post?.blog?.content}

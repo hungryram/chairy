@@ -2,6 +2,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image';
 import HeaderSection from './header-section';
 import FormBuilder from './form-builder';
+import Animate from './animate';
 
 interface Props {
     content: string[];
@@ -83,16 +84,19 @@ export default function HeroCustom({
                         }
                     </div>
                     <div className="lg:w-1/2 mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
-                        {image &&
-                            <Image
-                                src={image}
-                                alt={altText}
-                                placeholder={blurData ? 'blur' : 'empty'}
-                                blurDataURL={blurData}
-                                width={900}
-                                height={900}
-                            />
-                        }
+                        <Animate>
+                            {image &&
+                                <Image
+                                    src={image}
+                                    alt={altText}
+                                    placeholder={blurData ? 'blur' : 'empty'}
+                                    blurDataURL={blurData}
+                                    width={900}
+                                    height={900}
+                                />
+                            }
+                        </Animate>
+
                     </div>
                     <div
                         className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-40rem)]"

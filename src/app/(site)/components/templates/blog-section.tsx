@@ -57,7 +57,7 @@ export default function BlogSection({
                         secondaryButtonStyle={secondaryButtonStyle}
                     />
                 )}
-                <div className={`mx-auto grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:col-span-7 ${content && 'mt-16'}`}>
+                <div className={`mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none ${content && 'mt-16'}`}>
                     {blog?.map((post: any) => {
 
                         const parsedDate = parseISO(post?.date)

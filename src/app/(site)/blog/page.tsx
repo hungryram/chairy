@@ -99,10 +99,10 @@ export default async function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
       />
-      <div className="section">
+      <div className="pt-48">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{posts?.pageSetting?.blog?.title}</h2>
+          <div className="mx-auto max-w-2xl text-center pb-20">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{posts?.pageSetting?.blog?.title}</h2>
             {posts?.pageSetting?.blog?.content &&
               <div className="mt-10">
                 <ContentEditor
@@ -111,7 +111,7 @@ export default async function BlogPage() {
               </div>
             }
           </div>
-          <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <div className={`mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none text-center`}>
             {posts?.blog?.map((post: any) => {
               const parsedDate = parseISO(post?.date)
               const postImage = post?.imageData?.asset

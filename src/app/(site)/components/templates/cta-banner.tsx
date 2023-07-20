@@ -1,4 +1,5 @@
 import { ctaData } from "../../../../../sample/data";
+import Animate from "./animate";
 import HeaderSection from "./header-section";
 
 interface Props {
@@ -40,22 +41,24 @@ export default function CallToActionBanner({
     <div style={allStyles}>
       <div className="container">
         <div className="mx-auto max-w-4xl text-center">
-          {(content || primaryButtonLink || secondaryButtonLink) ? (
-            <HeaderSection
-              content={content}
-              textAlign={textAlign}
-              // PRIMARY
-              buttonLink={primaryButtonLink}
-              primaryButtonText={primaryButtonText}
-              primaryButtonStyle={primaryButtonStyle}
-              // SECONDARY
-              secondaryButtonLink={secondaryButtonLink}
-              secondaryButtonText={secondaryButtonText}
-              secondaryButtonStyle={secondaryButtonStyle}
-            />
-          ) :
-            <div dangerouslySetInnerHTML={{ __html: ctaData.content }} />
-          }
+          <Animate>
+            {(content || primaryButtonLink || secondaryButtonLink) ? (
+              <HeaderSection
+                content={content}
+                textAlign={textAlign}
+                // PRIMARY
+                buttonLink={primaryButtonLink}
+                primaryButtonText={primaryButtonText}
+                primaryButtonStyle={primaryButtonStyle}
+                // SECONDARY
+                secondaryButtonLink={secondaryButtonLink}
+                secondaryButtonText={secondaryButtonText}
+                secondaryButtonStyle={secondaryButtonStyle}
+              />
+            ) :
+              <div dangerouslySetInnerHTML={{ __html: ctaData.content }} />
+            }
+          </Animate>
         </div>
       </div>
     </div>
