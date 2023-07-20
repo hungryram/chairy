@@ -8,6 +8,7 @@ import GoogleAnalytics from './components/global/analytics'
 import { interFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
 import NavbarWide from './components/global/navbar-wide'
+import ScrollProgress from './components/templates/scroll'
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
@@ -127,7 +128,6 @@ export default async function RootLayout({
     enableTransparent: data?.appearances?.header?.enableTransparent,
   }
 
-
   return (
     <html lang="en">
       {data?.profileSettings?.settings?.googleID &&
@@ -185,6 +185,7 @@ export default async function RootLayout({
               }
           `}
         </style>
+
         {data?.appearances?.header?.menuLayout === 'simple' &&
           <Navbar
             {...navbarSchema}
@@ -195,6 +196,7 @@ export default async function RootLayout({
             {...navbarSchema}
           />
         }
+      <ScrollProgress />
         {children}
         <Footer
           singleColumn={data?.appearances?.footer?.singleColumn}
