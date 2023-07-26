@@ -234,7 +234,7 @@ export default function Example({
               </div>
             </div>
 
-            <Disclosure.Panel className="lg:hidden">
+            <Disclosure.Panel className="lg:hidden bg-black">
               <div className="space-y-1 pb-3 pt-2 px-4">
                 {navItems?.map((link: any) => {
                   const menuLinks =
