@@ -13,7 +13,7 @@ import {
 } from "framer-motion";
 import Animate from "./animate";
 
-const calculateMinHeight = (height, range) => {
+const calculateMinHeight = (height: any, range: any) => {
     return height + height * range;
 };
 
@@ -126,7 +126,7 @@ export default function CalltoActionTextImage({
                             {image &&
                                 <Image
                                     src={image}
-                                    alt={altText}
+                                    alt={altText ?? '2 mobile phones mockup'}
                                     placeholder={blurData ? 'blur' : 'empty'}
                                     blurDataURL={blurData}
                                     width={1824}
@@ -144,9 +144,6 @@ export default function CalltoActionTextImage({
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
