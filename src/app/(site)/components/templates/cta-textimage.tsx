@@ -98,6 +98,7 @@ export default function CalltoActionTextImage({
         springConfig
     );
 
+
     return (
         <div style={allStyles}>
             <div className="container">
