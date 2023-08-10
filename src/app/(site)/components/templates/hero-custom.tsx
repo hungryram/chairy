@@ -77,9 +77,9 @@ export default function HeroCustom({
                                         />
                                     </div>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <Link href="/sign-up" className="primary-button !bg-[#7D0202] !text-white uppercase">Sign up for early access</Link>
-                                </div>
+                                </div> */}
                                 {/* <FormBuilder
                                     formSchema={formBuilder}
                                 /> */}
