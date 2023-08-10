@@ -12,7 +12,7 @@ import ScrollProgress from './components/templates/scroll'
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(mainLayoutProfile, { next: { revalidate: 60 } })
+  const data = await client.fetch(mainLayoutProfile)
 
   return {
     title: data?.profileSettings?.seo?.title_tag,
