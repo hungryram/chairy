@@ -3,6 +3,7 @@ import Image from 'next/image';
 import HeaderSection from './header-section';
 import FormBuilder from './form-builder';
 import Animate from './animate';
+import Link from 'next/link';
 
 interface Props {
     content: string[];
@@ -75,6 +76,9 @@ export default function HeroCustom({
                                             secondaryButtonStyle={secondaryButtonStyle}
                                         />
                                     </div>
+                                </div>
+                                <div>
+                                    <Link href="/sign-up" className="primary-button !bg-[#7D0202] !text-white uppercase">Sign up for early access</Link>
                                 </div>
                                 {/* <FormBuilder
                                     formSchema={formBuilder}

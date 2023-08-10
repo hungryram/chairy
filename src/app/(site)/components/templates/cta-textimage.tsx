@@ -64,39 +64,39 @@ export default function CalltoActionTextImage({
 
     const allStyles = { ...backgroundStyles, ...styles }
 
-    // const range = 0.9;
-    // const { scrollY } = useScroll();
-    // const ref = useRef();
-    // const [offsetTop, setOffsetTop] = useState(0);
-    // const [minHeight, setMinHeight] = useState("auto");
-    // const springConfig = {
-    //     damping: 100,
-    //     stiffness: 100,
-    //     mass: rand(1, 3)
-    // };
+    const range = 0.9;
+    const { scrollY } = useScroll();
+    const ref = useRef();
+    const [offsetTop, setOffsetTop] = useState(0);
+    const [minHeight, setMinHeight] = useState("auto");
+    const springConfig = {
+        damping: 100,
+        stiffness: 100,
+        mass: rand(1, 3)
+    };
 
-    // useLayoutEffect(() => {
-    //     if (!ref.current) return null;
-    //     const onResize = () => {
-    //         setOffsetTop(ref.current.offsetTop);
-    //         setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
-    //     };
+    useLayoutEffect(() => {
+        if (!ref.current) return null;
+        const onResize = () => {
+            setOffsetTop(ref.current.offsetTop);
+            setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
+        };
 
-    //     onResize();
-    //     window.addEventListener("resize", onResize);
+        onResize();
+        window.addEventListener("resize", onResize);
 
-    //     return () => window.removeEventListener("resize", onResize);
-    // }, [ref]);
+        return () => window.removeEventListener("resize", onResize);
+    }, [ref]);
 
 
-    // const y = useSpring(
-    //     useTransform(
-    //         scrollY,
-    //         [offsetTop - 400, offsetTop + 400],
-    //         ["0%", `${range * 100}%`]
-    //     ),
-    //     springConfig
-    // );
+    const y = useSpring(
+        useTransform(
+            scrollY,
+            [offsetTop - 400, offsetTop + 400],
+            ["0%", `${range * 100}%`]
+        ),
+        springConfig
+    );
 
 
     return (
@@ -122,7 +122,7 @@ export default function CalltoActionTextImage({
                         </Animate>
                     </div>
                     <div className="lg:w-1/2">
-                        {/* <motion.div ref={ref} initial={{ y: 0 }} style={{ y }}> */}
+                        <motion.div ref={ref} initial={{ y: 0 }} style={{ y }}>
                             {image &&
                                 <Image
                                     src={image}
@@ -134,7 +134,7 @@ export default function CalltoActionTextImage({
                                     className="relative z-50"
                                 />
                             }
-                        {/* </motion.div> */}
+                        </motion.div>
                         <div className="relative bottom-48">
                             <div className="absolute inset-x-00 bottom-0 -z-10 transform-gpu left-0 right-0 flex justify-center" aria-hidden="true">
                                 <div className="relative">
