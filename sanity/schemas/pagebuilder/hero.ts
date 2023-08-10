@@ -144,11 +144,11 @@ export default defineType({
             type: 'color',
             group: 'settings'
         },
-        {
-            title: 'Form Builder',
-            name: 'formBuilder',
-            type: 'formBuilder'
-          },
+        // {
+        //     title: 'Form Builder',
+        //     name: 'formBuilder',
+        //     type: 'formBuilder'
+        //   },
     ],
     preview: {
         select: {
