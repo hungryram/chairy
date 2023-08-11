@@ -9,6 +9,7 @@
   top: 0; /* Initial position above the viewport */
   left: 0;
   right: 0;
+  background: #000;
 }
 
 .topHeader {

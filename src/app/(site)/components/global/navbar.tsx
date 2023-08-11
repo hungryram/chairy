@@ -42,7 +42,7 @@ export default function Example({
 
   useEffect(() => {
     const handleScroll = () => {
-      setScroll(window.scrollY > 300);
+      setScroll(window.scrollY > 200);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -68,7 +68,7 @@ export default function Example({
 
   return (
     <>
-      <header className={`${Styles.header} ${scroll ? Styles.stickyHeader : '-top-52'} ease-in-out transition-all duration-700 ${enableTransparent ? 'absolute left-0 right-0 z-50 top-0' : 'shadow'}`}>
+      <header className={`${Styles.header} ${scroll ? Styles.stickyHeader : '-top-52'} ease-in-out transition-all duration-700 ${enableTransparent ? '' : 'shadow'}`}>
         {enableTopHeader &&
           <div className={`${Styles.topHeader} ${scroll && 'hidden'}`}>
             <div className={Styles.topHeaderContainer}>
