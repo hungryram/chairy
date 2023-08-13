@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
 import { format, parseISO } from 'date-fns'
 import ContentEditor from '../../components/util/content-editor'
+import Link from 'next/link'
 
 type Props = {
     params: {
@@ -128,12 +129,16 @@ export default async function BlogSlug({ params }: Props) {
                             blurDataURL={postImage?.lqip}
                             width={1500}
                             height={800}
+                            className="mb-10"
                         />
                     }
                     <div className="content">
                         <ContentEditor
                             content={post?.blog?.content}
                         />
+                    </div>
+                    <div className="mt-6 mb-10">
+                        <Link href="/sign-up" className="primary-button !text-white !bg-[#7D0202]">Sign Up</Link>
                     </div>
                     <div className="mt-6">
                         <ShareSocial
