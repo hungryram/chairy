@@ -68,7 +68,7 @@ export default function Example({
 
   return (
     <>
-      <header className={`${Styles.header} ${scroll ? Styles.stickyHeader : '-top-52'} ease-in-out transition-all duration-700 ${enableTransparent ? '' : 'shadow'}`}>
+      <header className={`${Styles.header} ${scroll ? Styles.stickyHeader : 'top-0 absolute'} z-50 ease-in-out transition-all duration-700 ${enableTransparent ? '' : 'shadow'}`}>
         {enableTopHeader &&
           <div className={`${Styles.topHeader} ${scroll && 'hidden'}`}>
             <div className={Styles.topHeaderContainer}>
