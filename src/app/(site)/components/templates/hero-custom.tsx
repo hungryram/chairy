@@ -67,9 +67,9 @@ export default function HeroCustom({
                                             content={content}
                                             textAlign={textAlign}
                                             // PRIMARY
-                                            buttonLink={primaryButtonLink}
-                                            primaryButtonText={primaryButtonText}
-                                            primaryButtonStyle={primaryButtonStyle}
+                                            // buttonLink={primaryButtonLink}
+                                            // primaryButtonText={primaryButtonText}
+                                            // primaryButtonStyle={primaryButtonStyle}
                                             // SECONDARY
                                             secondaryButtonLink={secondaryButtonLink}
                                             secondaryButtonText={secondaryButtonText}
