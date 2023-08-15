@@ -75,18 +75,18 @@ export default function CalltoActionTextImage({
         mass: rand(1, 3)
     };
 
-    useLayoutEffect(() => {
-        if (!ref.current) return null;
-        const onResize = () => {
-            setOffsetTop(ref.current.offsetTop);
-            setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
-        };
+    //useLayoutEffect(() => {
+    //    if (!ref.current) return null;
+    //    const onResize = () => {
+    //        setOffsetTop(ref.current.offsetTop);
+    //        setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
+    //    };
 
-        onResize();
-        window.addEventListener("resize", onResize);
+    //    onResize();
+    //    window.addEventListener("resize", onResize);
 
-        return () => window.removeEventListener("resize", onResize);
-    }, [ref]);
+    //    return () => window.removeEventListener("resize", onResize);
+    //}, [ref]);
 
 
     const y = useSpring(
