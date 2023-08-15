@@ -45,7 +45,7 @@ export async function generateMetadata() {
 
 export default async function TeamSection() {
 
-    const team = await client.fetch(teamPage, { next: { revalidate: 60 } })
+    const team = await client.fetch(teamPage, { next: { revalidate: 10 } })
 
     if (!team.team) {
         notFound()

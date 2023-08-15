@@ -3,7 +3,7 @@ import Main from './components/templates/main';
 import { homePageData } from '../../../lib/groq-data';
 
 export default async function Home() {
-  const data = await client.fetch(homePageData, { next: { revalidate: 60 } })
+  const data = await client.fetch(homePageData, { next: { revalidate: 10 } })
 
   return (
     <Main

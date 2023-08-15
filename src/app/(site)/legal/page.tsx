@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 // GENERATES SEO
 export async function generateMetadata() {
-    const legal = await client.fetch(legalPage, { next: { revalidate: 60 } })
+    const legal = await client.fetch(legalPage, { next: { revalidate: 10 } })
 
     const hasLegal = legal?.legal?.length > 0;
 
@@ -44,7 +44,7 @@ export async function generateMetadata() {
 
 export default async function LegalPage() {
 
-    const legal = await client.fetch(legalPage, { next: { revalidate: 60 } })
+    const legal = await client.fetch(legalPage, { next: { revalidate: 10 } })
 
     const pageSettings = legal?.pageSetting?.legal
 

@@ -12,7 +12,7 @@ import ScrollProgress from './components/templates/scroll'
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(mainLayoutProfile, { next: { revalidate: 60 } })
+  const data = await client.fetch(mainLayoutProfile, { next: { revalidate: 10 } })
 
   return {
     title: data?.profileSettings?.seo?.title_tag,
@@ -58,7 +58,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  const data = await client.fetch(appearance, { next: { revalidate: 60 } })
+  const data = await client.fetch(appearance, { next: { revalidate: 10 } })
 
   const localBusiness = {
     "@context": "https://schema.org",

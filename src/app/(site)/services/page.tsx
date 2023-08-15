@@ -7,7 +7,7 @@ import ContentEditor from "../components/util/content-editor"
 
 // GENERATES SEO
 export async function generateMetadata() {
-    const serviceMeta = await client.fetch(servicesPage, { next: { revalidate: 60 } })
+    const serviceMeta = await client.fetch(servicesPage, { next: { revalidate: 10 } })
 
     const hasServices = serviceMeta?.services?.length > 0;
 
@@ -47,7 +47,7 @@ export async function generateMetadata() {
 
 export default async function ServicesSection() {
 
-    const services = await client.fetch(servicesPage, { next: { revalidate: 60 } })
+    const services = await client.fetch(servicesPage, { next: { revalidate: 10 } })
 
     if (!services.services) {
         notFound()

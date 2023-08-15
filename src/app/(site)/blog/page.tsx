@@ -8,7 +8,7 @@ import ContentEditor from "../components/util/content-editor"
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const post = await client.fetch(blogPage, { next: { revalidate: 60 } })
+  const post = await client.fetch(blogPage, { next: { revalidate: 10 } })
 
   const hasBlog = post?.blog?.length > 0;
 
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function BlogPage() {
 
-  const posts = await client.fetch(blogPage, { next: { revalidate: 60 } })
+  const posts = await client.fetch(blogPage, { next: { revalidate: 10 } })
 
   if (!posts) {
     notFound()
