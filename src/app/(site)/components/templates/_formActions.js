@@ -64,34 +64,41 @@ export const submitForm = async (data) => {
     </table>
   `;
 
-    if (honeypot.length === 0) {
-        if (process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
-            const client = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN);
+  if (honeypot.length === 0) {
+    if (process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
+        const client = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN);
 
-            // Create an array of custom headers from formData
-            const customHeaders = Object.values(formData).map((value, index) => ({
-                "Name": `field${index + 1}`,
-                "Value": value // Convert value to string if needed
-            }));
+        // Create an array of custom headers from formData
+        const customHeaders = Object.values(formData).map((value, index) => ({
+            "Name": `field${index + 1}`,
+            "Value": value.toString() // Convert value to string if needed
+        }));
 
-            const response = await client.sendEmail({
-                "From": data.get('sendFrom'),
-                "To": data.get('sendTo'),
-                "Bcc": data.get('bcc'),
-                "Cc": data.get('cc'),
-                "ReplyTo": email,
-                "Subject": data.get('subject'),
-                "HtmlBody": htmlBody,
-                "Headers": customHeaders,
-            })
-                .then((res) => res)
-                .catch((err) => console.error(err))
+        // Add a separate custom header for email
+        customHeaders.push({
+            "Name": "Email",
+            "Value": email
+        });
 
-            if (response?.Message === 'OK') {
-                return redirect(`/${data.get('redirectTo')}`)
-            }
-        } else {
-            console.error("Postmark API token is missing.");
+        const response = await client.sendEmail({
+            "From": data.get('sendFrom'),
+            "To": data.get('sendTo'),
+            "Bcc": data.get('bcc'),
+            "Cc": data.get('cc'),
+            "ReplyTo": email,
+            "Subject": data.get('subject'),
+            "HtmlBody": htmlBody,
+            "Headers": customHeaders,
+        })
+            .then((res) => res)
+            .catch((err) => console.error(err))
+
+        if (response?.Message === 'OK') {
+            return redirect(`/${data.get('redirectTo')}`)
         }
+    } else {
+        console.error("Postmark API token is missing.");
     }
+}
+
 }
