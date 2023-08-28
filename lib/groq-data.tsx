@@ -487,6 +487,7 @@ export const blogPage = groq`
       _id,
       title,
       date,
+      excerpt,
       _updatedAt,
       'slug': slug.current,
       "author": author->{

@@ -126,7 +126,7 @@ export default async function BlogSlug({ params }: Props) {
                     {postImage?.url &&
                         <Image
                             src={postImage?.url}
-                            alt={postImage?.altText}
+                            alt={postImage?.altText ? postImage?.altText : post?.blog?.title}
                             placeholder={postImage?.lqip ? 'blur' : 'empty'}
                             blurDataURL={postImage?.lqip}
                             width={1500}

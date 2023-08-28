@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: {
       index: hasBlog,
       follow: hasBlog
-  }
+    }
   }
 }
 
@@ -93,7 +93,7 @@ export default async function BlogPage() {
       }
     }))
   };
-  
+
 
   return (
     <>
@@ -113,22 +113,25 @@ export default async function BlogPage() {
               </div>
             }
           </div>
-          <div className={`mx-auto grid grid-cols-1 gap-8 lg:mx-0 lg:max-w-none text-center`}>
-            {posts?.blog?.map((post: any) => {
-              const parsedDate = parseISO(post?.date)
-              const postImage = post?.imageData?.asset
-              return (
-                <BlogCard
-                  key={post?._id}
-                  title={post?.title}
-                  slug={`blog/${post.slug}`}
-                  date={format(parsedDate, 'LLLL	d, yyyy')}
-                  image={postImage?.url}
-                  blurData={postImage?.lqip}
-                  altText={postImage?.altText}
-                />
-              )
-            })}
+          <div className="flex justify-center mx-auto">
+            <div className={`mx-auto grid grid-cols-1 gap-14 lg:mx-0 lg:max-w-none`}>
+              {posts?.blog?.map((post: any) => {
+                const parsedDate = parseISO(post?.date)
+                const postImage = post?.imageData?.asset
+                return (
+                  <BlogCard
+                    key={post?._id}
+                    title={post?.title}
+                    slug={`blog/${post.slug}`}
+                    date={format(parsedDate, 'LLLL	d, yyyy')}
+                    image={postImage?.url}
+                    blurData={postImage?.lqip}
+                    altText={postImage?.altText}
+                    excerpt={post?.excerpt}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       </div >

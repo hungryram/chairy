@@ -7,7 +7,8 @@ interface Props {
     blurData: string;
     title: string;
     slug: string;
-    date: any
+    date: any;
+    excerpt: string;
 }
 
 export default function BlogCard({
@@ -16,23 +17,37 @@ export default function BlogCard({
     blurData,
     date,
     title,
-    slug
+    slug,
+    excerpt
 }: Props) {
 
     return (
-        <article
-            className="relative isolate flex flex-col"
-        >
-            <div className="flex flex-wrap items-center gap-y-1 text-sm leading-6 text-gray-300">
-                <div className="-ml-4 flex items-center gap-x-4">
-                </div>
+        <article className="relative isolate flex flex-col gap-8 lg:flex-row">
+            <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+                <Image
+                    src={image}
+                    alt={title}
+                    fill={true}
+                    className="absolute inset-0 h-full w-full object-cover"
+                />
             </div>
-            <h3 className="mt-3 text-xl font-semibold leading-6 text-white">
-                {title}
-            </h3>
-            <time className="text-sm" dateTime={date}>{date}</time>
-            <div className="mt-4">
-                <Link href={slug} className="italic font-light underline">Read Article</Link>
+            <div>
+                <div className="flex items-center gap-x-4 text-xs">
+                    <time dateTime={date} className="text-gray-500">
+                        {date}
+                    </time>
+                </div>
+                <div className="group relative max-w-xl text-left content">
+                    <h3 className="mt-3 text-lg font-semibold leading-6">
+                        <Link href={slug}>
+                            <span className="absolute inset-0" />
+                            {title}
+                        </Link>
+                    </h3>
+                    <p className="mt-5 text-sm leading-6 text-gray-600">{excerpt}</p>
+                    <Link href={slug} className="accent italic text-sm">Read more...</Link>
+                </div>
+
             </div>
         </article>
     )
