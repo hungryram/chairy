@@ -483,7 +483,7 @@ export const blogPage = groq`
         ...
       }
     },
-    'blog': *[_type == 'blog']{
+    'blog': *[_type == 'blog'] | order(date desc){
       _id,
       title,
       date,

@@ -103,8 +103,8 @@ export default async function BlogPage() {
       />
       <div className="pt-48">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center pb-20">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{posts?.pageSetting?.blog?.title}</h2>
+          <div className="mx-auto max-w-2xl text-center pb-20 content">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{posts?.pageSetting?.blog?.title}</h1>
             {posts?.pageSetting?.blog?.content &&
               <div className="mt-10">
                 <ContentEditor
