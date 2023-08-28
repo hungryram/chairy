@@ -6,6 +6,8 @@ import { format, parseISO } from 'date-fns'
 import { Metadata } from 'next';
 import ContentEditor from "../components/util/content-editor"
 
+export const revalidate = 0
+
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
   const post = await client.fetch(blogPage, { next: { revalidate: 10 } })
