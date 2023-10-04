@@ -28,7 +28,7 @@ export default function BlogCard({
                     src={image}
                     alt={title}
                     fill={true}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-contain"
                 />
             </div>
             <div>
