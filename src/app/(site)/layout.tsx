@@ -10,6 +10,9 @@ import Pixel from './components/global/pixel'
 import NavbarWide from './components/global/navbar-wide'
 import ScrollProgress from './components/templates/scroll'
 
+export const revalidate = 0;
+
+
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(mainLayoutProfile, { next: { revalidate: 10 } })

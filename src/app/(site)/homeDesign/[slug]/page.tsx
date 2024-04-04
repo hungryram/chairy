@@ -4,6 +4,8 @@ import Main from '../../components/templates/main'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
 
+export const revalidate = 0;
+
 type Props = {
     params: {
         slug: string
