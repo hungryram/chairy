@@ -23,7 +23,7 @@
     "eslint-config-next": "13.4.1",
     "framer-motion": "^10.13.0",
     "get-youtube-id": "^1.0.1",
-    "next": "^13.3.3",
+    "next": "^14.1.4",
     "next-sanity": "^5.1.1",
     "postcss": "8.4.23",
     "postmark": "^3.0.18",
