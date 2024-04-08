@@ -81,6 +81,11 @@ import { AiOutlineFontColors } from "react-icons/ai"
             type: 'number'
           },
           {
+            title: 'Link',
+            name: 'link',
+            type: 'string'
+          },
+          {
             title: 'Image Align',
             name: 'imageAlign',
             type: 'string',
