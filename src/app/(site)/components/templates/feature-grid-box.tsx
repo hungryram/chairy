@@ -3,6 +3,7 @@ import * as HeroIcons from '@heroicons/react/24/outline';
 import HeaderSection from "./header-section";
 import Link from "next/link";
 import Animate from "./animate";
+import ContentEditor from "../util/content-editor";
 
 interface Props {
     backgroundStyles: any;
@@ -88,7 +89,7 @@ export default function FeaturedGridBox({
                                             (blockLink?._type === "team" && `/team/${node.blockLinking?.internalLink.slug}`) ||
                                             (node.blockLinking?.externalUrl && `${node.blockLinking?.externalUrl}`);
                                         return (
-                                            <div key={node._key} className={`${Styles.featureCardContainer} p-10`}>
+                                            <div key={node._key} className={`${Styles.featureCardContainer} p-6`}>
                                                 <dt className={`${Styles.featureCard}`} style={{
                                                     color: node?.headingColor?.hex
                                                 }}>
@@ -100,9 +101,18 @@ export default function FeaturedGridBox({
                                                     {node.value}
                                                 </dt>
                                                 <dd className={Styles.featureCardContent}>
-                                                    <p className="flex-auto" style={{
-                                                        color: node?.contentColor?.hex
-                                                    }}>{node.content}</p>
+                                                    {node?.content &&
+                                                        <p className="flex-auto" style={{
+                                                            color: node?.contentColor?.hex
+                                                        }}>{node.content}</p>
+                                                    }
+                                                    {node?.newContent &&
+                                                        <div className="content">
+                                                            <ContentEditor
+                                                                content={node?.newContent}
+                                                            />
+                                                        </div>
+                                                    }
                                                     {node?.button?.text &&
                                                         <p className="mt-6">
                                                             <Link href={linkUrl ?? '/'} className={`${Styles.featureCardCta}`} aria-label={`Link to ${node?.value}`} style={{

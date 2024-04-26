@@ -75,6 +75,16 @@ export default defineType({
                             type: 'text',
                         },
                         {
+                            title: 'New Content',
+                            name: 'newContent',
+                            type: 'contentEditor',
+                        },
+                        {
+                            title: 'Icon Image',
+                            name: 'iconImage',
+                            type: 'image',
+                        },
+                        {
                             title: 'Icon',
                             name: 'icon',
                             type: 'string',
