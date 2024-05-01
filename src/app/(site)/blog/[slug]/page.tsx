@@ -140,7 +140,7 @@ export default async function BlogSlug({ params }: Props) {
                         />
                     </div>
                     <div className="mt-6 mb-10">
-                        <Link href="/sign-up" className="primary-button !text-white !bg-[#7D0202]">Sign Up</Link>
+                        <Link href="https://www.chairyapp.com/#download" className="primary-button !text-white !bg-[#7D0202]">Download the App</Link>
                     </div>
                     <div className="mt-6">
                         <ShareSocial
