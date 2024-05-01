@@ -22,7 +22,7 @@ const serializers = {
         image: ({ value }) => {
             return (
                 <div className={
-                    `relative flex ${value.imageAlign == 'left' && 'justify-start' || value.imageAlign == 'center' && 'justify-center' || value.imageAlign =='right' && 'justify-end'}`
+                    `relative inline-block  mr-3 ${value.imageAlign == 'left' && 'justify-start' || value.imageAlign == 'center' && 'justify-center' || value.imageAlign =='right' && 'justify-end'}`
                 }>
                         {value.link ? <a href={value.link} target="_blank"><img src={value.asset !== undefined && urlForImage(value).url()} alt={value.altTag} width={value.imageWidth} className="my-2"/></a> : <img src={value.asset !== undefined && urlForImage(value).url()} alt={value.altTag} width={value.imageWidth} className="my-6"/>}
                 </div>

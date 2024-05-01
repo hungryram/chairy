@@ -134,7 +134,7 @@ export default function FeaturedGridBox({
                                             />
                                         )}
                                         <div className="mt-10">
-                                            <Link href="/sign-up" className="primary-button" id="inquire">Sign Up</Link>
+                                            <a href="#download" className="primary-button">Download the App</a>
                                         </div>
                                     </div>
                                 </dl>

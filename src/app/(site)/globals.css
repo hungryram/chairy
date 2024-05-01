@@ -84,7 +84,7 @@ body .content h6 {
 }
 
 .content p + p {
-  @apply mt-6;
+  @apply mt-4;
 }
 
 .content p {
