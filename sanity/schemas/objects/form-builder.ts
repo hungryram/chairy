@@ -92,6 +92,7 @@ export default defineType({
                                     { title: 'Select', value: 'select' },
                                     { title: 'Radio Buttons', value: 'radio' },
                                     { title: 'Textarea', value: 'textarea' },
+                                    { title: 'State', value: 'state' },
                                     // { title: 'File Attachments', value: 'file' }
                                     // Add more field types as needed
                                 ],
