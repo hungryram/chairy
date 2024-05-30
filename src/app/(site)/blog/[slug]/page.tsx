@@ -140,7 +140,11 @@ export default async function BlogSlug({ params }: Props) {
                         />
                     </div>
                     <div className="mt-6 mb-10">
-                        <Link href="https://www.chairyapp.com/#download" className="primary-button !text-white !bg-[#7D0202]">Download the App</Link>
+                        {/* <Link href="https://www.chairyapp.com/#download" className="primary-button !text-white !bg-[#7D0202]">Download the App</Link> */}
+                        <div className="flex space-x-3">
+                            <a href="https://apps.apple.com/us/app/chairy/id6463957222" target="_blank"><img src="https://cdn.sanity.io/images/ez8qjsla/production/0e92934930b948baf4a4f8cf7afd40343539871b-120x40.svg" width="140" /></a>
+                            <a href="https://play.google.com/store/apps/details?id=com.chairyapp.chairy&hl=en_US&gl=US" target="_blank"><img src="https://cdn.sanity.io/images/ez8qjsla/production/b7710ef006d9bffe7346f20190d5e7c12e9285bd-564x168.png" width="150" /></a>
+                        </div>
                     </div>
                     <div className="mt-6">
                         <ShareSocial

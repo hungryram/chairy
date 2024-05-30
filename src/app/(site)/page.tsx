@@ -6,7 +6,7 @@ export const revalidate = 0
 
 export default async function Home() {
 
-  const data = await client.fetch(homePageData, { next: { revalidate: 10 } })
+  const data = await client.fetch(homePageData)
 
   return (
     <Main

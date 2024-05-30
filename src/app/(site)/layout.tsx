@@ -15,7 +15,7 @@ export const revalidate = 0;
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(mainLayoutProfile, { next: { revalidate: 10 } })
+  const data = await client.fetch(mainLayoutProfile)
 
   return {
     title: data?.profileSettings?.seo?.title_tag,

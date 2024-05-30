@@ -133,9 +133,7 @@ export default function FeaturedGridBox({
                                                 textAlign={textAlign}
                                             />
                                         )}
-                                        <div className="mt-10">
-                                            <a href="#download" className="primary-button">Download the App</a>
-                                        </div>
+
                                     </div>
                                 </dl>
                             </Animate>

@@ -5,9 +5,11 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import ContentEditor from "../components/util/content-editor"
 
+export const revalidate = 0
+
 // GENERATES SEO
 export async function generateMetadata() {
-    const serviceMeta = await client.fetch(servicesPage, { next: { revalidate: 10 } })
+    const serviceMeta = await client.fetch(servicesPage)
 
     const hasServices = serviceMeta?.services?.length > 0;
 
@@ -47,7 +49,7 @@ export async function generateMetadata() {
 
 export default async function ServicesSection() {
 
-    const services = await client.fetch(servicesPage, { next: { revalidate: 10 } })
+    const services = await client.fetch(servicesPage)
 
     if (!services.services) {
         notFound()
