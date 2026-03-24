@@ -79,7 +79,7 @@ export default function Footer({
       <div className="pt-20 pb-8">
         <div className="container">
           {singleColumn !== true ?
-            <div className={`lg:flex md:grid md:grid-cols-3 grid-cols-1 xl:gap-8 gap-y-10 space-y-10 items-baseline`}>
+            <div className={`lg:flex md:grid md:grid-cols-3 grid-cols-1 xl:gap-8 gap-y-10 space-y-10 items-end`}>
               <div className="space-y-8 flex-1">
                 {image ?
                   <div className="flex md:justify-start justify-center">
@@ -176,7 +176,7 @@ export default function Footer({
                 </div>
               }
               {footerText &&
-                <div className="text-sm flex-1">
+                <div className="text-sm flex">
                   <ContentEditor
                     content={footerText}
                   />
