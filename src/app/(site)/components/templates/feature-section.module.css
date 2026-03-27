@@ -11,7 +11,14 @@
 }
 
 .featureCardContainer {
-    @apply flex flex-col
+    @apply flex flex-col;
+    border-left: 3px solid transparent;
+    transition: background-color 0.2s ease, border-left-color 0.2s ease;
+}
+
+.featureCardContainer:hover {
+    border-left-color: #f97316;
+    background-color: #1a1a1a;
 }
 
 .featureCardContent {

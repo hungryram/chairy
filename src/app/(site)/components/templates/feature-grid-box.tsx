@@ -1,9 +1,28 @@
+'use client'
+
 import Styles from "./feature-section.module.css"
 import * as HeroIcons from '@heroicons/react/24/outline';
 import HeaderSection from "./header-section";
 import Link from "next/link";
-import Animate from "./animate";
 import ContentEditor from "../util/content-editor";
+import React, { useRef, useState, useLayoutEffect } from "react";
+
+import {
+    useScroll,
+    useTransform,
+    useSpring,
+    motion
+} from "framer-motion";
+import Image from "next/image";
+import Animate from "./animate";
+
+const calculateMinHeight = (height: any, range: any) => {
+    return height + height * range;
+};
+
+const rand = (min = 0, max = 100) => {
+    return Math.floor(Math.random() * (+max - +min)) + +min;
+};
 
 interface Props {
     backgroundStyles: any;
@@ -38,7 +57,6 @@ export default function FeaturedGridBox({
     secondaryButtonText,
     secondaryButtonStyle,
     gridBackgroundColor,
-    offsetTop,
     paddingTop,
     paddingBottom,
 }: Props) {
@@ -50,8 +68,42 @@ export default function FeaturedGridBox({
 
     const allStyles = { ...backgroundStyles, ...styles }
 
+    const range = 0.9;
+    const { scrollY } = useScroll();
+    const ref = useRef();
+    const [offsetTop, setOffsetTop] = useState(0);
+    const [minHeight, setMinHeight] = useState("auto");
+    const springConfig = {
+        damping: 100,
+        stiffness: 100,
+        mass: rand(1, 3)
+    };
+
+    useLayoutEffect(() => {
+        if (!ref.current) return null;
+        const onResize = () => {
+            setOffsetTop(ref.current.offsetTop);
+            setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
+        };
+
+        onResize();
+        window.addEventListener("resize", onResize);
+
+        return () => window.removeEventListener("resize", onResize);
+    }, [ref]);
+
+
+    const y = useSpring(
+        useTransform(
+            scrollY,
+            [offsetTop - 400, offsetTop + 400],
+            ["0%", `${range * 100}%`]
+        ),
+        springConfig
+    );
+
     return (
-        <div className={`${offsetTop && '-mt-32 relative'}`} style={allStyles}>
+        <div style={allStyles}>
             <div className={`container`}>
                 <Animate>
                     {(content || primaryButtonLink || secondaryButtonLink) && (
@@ -70,10 +122,10 @@ export default function FeaturedGridBox({
                     )}
                 </Animate>
                 <div className={Styles.featureGridWrap}>
-                    <div className="lg:flex justify-center">
-                        <div className="lg:w-3/4">
+                    <div className="lg:flex justify-center items-center">
+                        <div className="lg:w-1/2">
                             <Animate>
-                                <dl className={`grid rounded-sm grid-cols-1 lg:grid-cols-${columnNumber} ${content && 'mt-16'} ${Styles.featuredBorder}`} style={{
+                                <dl className={`grid rounded-sm grid-cols-1 lg:grid-cols-${columnNumber} ${content && 'mt-16'} `} style={{
                                     backgroundColor: gridBackgroundColor
                                 }}>
                                     {blocks?.map((node: any) => {
@@ -126,7 +178,7 @@ export default function FeaturedGridBox({
                                             </div>
                                         )
                                     })}
-                                    <div className="my-10 text-center !font-light text-sm">
+                                    {/* <div className="my-10 text-center !font-light text-sm">
                                         {(secondContent) && (
                                             <HeaderSection
                                                 content={secondContent}
@@ -134,9 +186,18 @@ export default function FeaturedGridBox({
                                             />
                                         )}
 
-                                    </div>
+                                    </div> */}
                                 </dl>
                             </Animate>
+                        </div>
+                        <div className="lg:w-1/2">
+                            <Image
+                                src={'https://cdn.sanity.io/images/ez8qjsla/production/ff6163aba9f508c38e996032fb48f7379fa5caaa-1284x1506.jpg'}
+                                alt={'2 mobile phones mockup'}
+                                width={1824}
+                                height={1080}
+                                className="relative z-50"
+                            />
                         </div>
                     </div>
                 </div>
