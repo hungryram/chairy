@@ -104,11 +104,6 @@ body .content h6 {
   @apply my-1;
 }
 
-.swiper-button-disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 /*  FORM  */
 
 input[type="radio"]:checked:focus {

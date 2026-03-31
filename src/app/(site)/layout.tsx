@@ -154,7 +154,6 @@ export default async function RootLayout({
         <style>
           {`
               :root {
-                  --swiper-navigation-size: 30px;
                   --top-header-background: ${data.appearances?.topHeaderBar?.topHeaderBarBgColor};
                   --top-header-text-color: ${data.appearances?.topHeaderBar?.topHeaderBarTextColor};
                   --primary-accent: ${data.appearances?.primaryAccent ?? '#cccccc'};
@@ -202,7 +201,7 @@ export default async function RootLayout({
         }
       <ScrollProgress />
         {children}
-        {/* <NewsletterPopup /> */}
+        <NewsletterPopup />
         <Footer
           singleColumn={data?.appearances?.footer?.singleColumn}
           footerText={data.appearances?.footer?.footerText}

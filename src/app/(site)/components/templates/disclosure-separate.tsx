@@ -1,3 +1,4 @@
+'use client'
 import ContentEditor from "../util/content-editor"
 import HeaderSection from "./header-section";
 

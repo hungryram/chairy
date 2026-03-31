@@ -16,10 +16,6 @@ import DisclosureSection from "./disclosure-section";
 import DisclosureGrid from "./disclosure-grid";
 import LeadForm from "./lead-form";
 import ServicesNoImage from "./services-no-image";
-import GalleryMasonry from "./gallery-masonry";
-import GallerySwiper from "./gallery-swiper";
-import HeroSwiper from "./hero-swiper";
-import TestimonialSwiper from "./testimonial-swiper";
 import FeaturedGridImageTextOutside from "./featured-grid-image";
 import FeaturedGridImageTextInside from "./featured-grid-text-inside";
 import FeaturedGridBox from "./feature-grid-box";
@@ -187,18 +183,6 @@ export default function Main({
                                     imageOverlayColor={section?.imageOverlayColor}
                                 />
                             }
-                            {section?.layoutType === "heroSwiper" &&
-                                <HeroSwiper
-                                    key={section?._key}
-                                    images={section?.childImage}
-                                    textAlign={section?.textAlign}
-                                    imageOverlayColor={section?.imageOverlayColor}
-                                    textColor={section?.textColor?.hex}
-                                    imageHeight={section?.imageHeight}
-                                    animation={section?.animation}
-                                    navigationColors={section?.navigationColors?.hex}
-                                />
-                            }
                             {section?.layoutType === "sideByside" &&
                                 <HeroSidebySide
                                     key={section?._key}
@@ -252,33 +236,7 @@ export default function Main({
                     );
                 }
 
-                if (section._type === 'gallery') {
-                    return (
-                        <>
-                            {section?.layoutType === 'masonryGallery' ?
-                                <GalleryMasonry
-                                    content={section?.content}
-                                    images={section?.childImage}
-                                    disablePagination={section?.disablePagination}
-                                    textAlign={section?.textAlign}
-                                    {...settingsSchema}
-
-                                />
-                                :
-                                <GallerySwiper
-                                    content={section?.content}
-                                    images={section?.childImage}
-                                    disablePagination={section?.disablePagination}
-                                    disableNavigation={section?.disableNavigation}
-                                    slideNumber={section?.slideNumber}
-                                    textAlign={section?.textAlign}
-                                    {...settingsSchema}
-                                    navigationColors={section?.navigationColors?.hex}
-                                />
-                            }
-                        </>
-                    );
-                }
+                // Gallery components removed - Swiper dependency removed
 
                 if (section._type === 'ctaSection') {
                     return (
@@ -372,17 +330,6 @@ export default function Main({
                                     content={section?.content}
                                     textAlign={section?.textAlign}
                                     {...settingsSchema}
-                                />
-                            }
-                            {section?.layoutType == 'slider' &&
-                                <TestimonialSwiper
-                                    key={section?._key}
-                                    testimonials={allTestimonials}
-                                    content={section?.content}
-                                    textAlign={section?.textAlign}
-                                    {...settingsSchema}
-                                    slideNumber={section?.slideNumber}
-                                    navigationColors={section?.navigationColors?.hex}
                                 />
                             }
                             {section?.layoutType == 'column' &&
