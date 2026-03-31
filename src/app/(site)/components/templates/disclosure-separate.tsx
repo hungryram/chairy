@@ -36,6 +36,7 @@ export default function DisclosureSeparate({
     paddingBottom,
     backgroundStyles
 }: Props) {
+    const disclosures = Array.isArray(disclosure) ? disclosure : [];
 
     const styles = {
         paddingTop: paddingTop ?? '5rem',
@@ -62,7 +63,7 @@ export default function DisclosureSeparate({
                     />
                 )}
                 <dl className="mt-10 space-y-8 divide-y divide-gray-900/10">
-                    {disclosure.map((node: any, i: number) => (
+                    {disclosures.map((node: any, i: number) => (
                         <div key={i} className="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
                             <dt className="text-base font-semibold leading-7 lg:col-span-5" style={{
                                 color: `${disclosureTextColor?.hex ?? '#000000'}`

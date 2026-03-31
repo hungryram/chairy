@@ -48,6 +48,7 @@ export default function DisclosureSection({
     paddingTop,
     paddingBottom,
 }: Props) {
+    const disclosures = Array.isArray(disclosure) ? disclosure : [];
 
     function toPlainText(blocks: Block[] = []): string {
         return blocks
@@ -64,7 +65,7 @@ export default function DisclosureSection({
     const schemaMarkup = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": disclosure.map((node: any) => ({
+                "mainEntity": disclosures.map((node: any) => ({
           ...{
             "@type": "Question",
             "name": node?.heading || "",
@@ -106,7 +107,7 @@ export default function DisclosureSection({
                         />
                     )}
                     <div className={` ${content && 'mt-16'}`}>
-                        {disclosure?.map((node: any) => {
+                        {disclosures.map((node: any) => {
                             return (
                                 <div className={`w-full`} key={node._key}>
                                     <div className="mx-auto w-full md:max-w-2xl rounded-2xl p-2">

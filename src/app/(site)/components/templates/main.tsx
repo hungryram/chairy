@@ -88,9 +88,11 @@ export default function Main({
     emailBcc,
     emailCc,
 }: Props) {
+    const sections = Array.isArray(pageBuilder) ? pageBuilder : [];
+
     return (
         <>
-            {pageBuilder?.map((section: any) => {
+            {sections.map((section: any) => {
                 const bg = section?.background?.background;
                 const textColor = section?.background?.contentColor?.hex;
 

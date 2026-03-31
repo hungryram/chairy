@@ -94,6 +94,8 @@ const states = [
 
 
 export default function FormBuilder({ formSchema }: FormBuilderProps) {
+  const fields = Array.isArray(formSchema?.fields) ? formSchema.fields : [];
+
   return (
     <div className="py-2">
       <form action={submitForm}>
@@ -105,9 +107,9 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
         <input className="hidden" type="hidden" name="sendTo" value={formSchema?.sendTo} />
         <input className="hidden" type="hidden" name="subject" value={formSchema?.subject} />
         <input className="hidden" type="hidden" name="redirectTo" value={formSchema?.redirectTo} />
-        {formSchema?.fields && (
+        {fields.length > 0 && (
           <div className="grid grid-cols-4 gap-x-2">
-            {formSchema.fields.map((field, i) => {
+            {fields.map((field, i) => {
               return (
                 <div className={field.half ? 'col-span-2' : 'col-span-4'} key={field._key}>
                   {field?.hideLabel ?
@@ -157,7 +159,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   )}
                   {field.type === 'radio' && (
                     <div className={`gap-x-6 mt-4 ${field?.stacked ? '' : 'flex items-center'}`}>
-                      {field?.radioValue?.map((node, i) => {
+                      {(Array.isArray(field?.radioValue) ? field.radioValue : []).map((node, i) => {
                         return (
                           <div className="flex items-center gap-2 my-1" key={i}>
                             <input
@@ -177,7 +179,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   )}
                   {field.type === 'checkbox' && (
                     <div className={`gap-x-6 mt-4 ${field?.stacked ? '' : 'flex items-center'}`}>
-                      {field?.checkBoxValue?.map((node, i) => {
+                      {(Array.isArray(field?.checkBoxValue) ? field.checkBoxValue : []).map((node, i) => {
                         return (
                           <div className="flex items-center gap-2 my-1" key={i}>
                             <input
@@ -204,7 +206,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                         className="block w-full rounded-md border py-1.5 text-gray-900 shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 bg-gray-100"
                         required={field.required ? true : undefined}
                       >
-                        {field?.selectValue?.map((node, i) => {
+                        {(Array.isArray(field?.selectValue) ? field.selectValue : []).map((node, i) => {
                           return (
                             <option value={node} key={i}>
                               {node}
