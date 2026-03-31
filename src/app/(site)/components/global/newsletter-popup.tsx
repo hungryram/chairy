@@ -17,16 +17,18 @@ export default function NewsletterPopup() {
     const rawValue = window.localStorage.getItem(DISMISS_KEY);
     const dismissedUntil = rawValue ? Number(rawValue) : 0;
 
-    if (dismissedUntil > Date.now()) {
-      return;
+    let timer: NodeJS.Timeout | undefined;
+
+    if (dismissedUntil <= Date.now()) {
+      timer = window.setTimeout(() => {
+        setOpen(true);
+      }, SHOW_DELAY_MS);
     }
 
-    const timer = window.setTimeout(() => {
-      setOpen(true);
-    }, SHOW_DELAY_MS);
-
     return () => {
-      window.clearTimeout(timer);
+      if (timer) {
+        window.clearTimeout(timer);
+      }
     };
   }, []);
 
