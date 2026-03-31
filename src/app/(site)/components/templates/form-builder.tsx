@@ -92,6 +92,22 @@ const states = [
   { title: 'Wyoming', value: 'WY' }
 ];
 
+const asString = (value: unknown): string => {
+  if (typeof value === 'string') return value;
+  if (value == null) return '';
+  return String(value);
+};
+
+const fieldId = (label: unknown, index: number): string => {
+  return `${asString(label).replace(/ /g, '')}${index}`;
+};
+
+const optionId = (value: unknown, index: number): string => {
+  return `${asString(value)
+    .replace(/^[^A-Za-z0-9]+/g, '')
+    .replace(/[^A-Za-z0-9_\-:.]/g, '')}${index}`;
+};
+
 
 export default function FormBuilder({ formSchema }: FormBuilderProps) {
   const fields = Array.isArray(formSchema?.fields) ? formSchema.fields : [];
@@ -115,7 +131,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   {field?.hideLabel ?
                     <></>
                     :
-                    <label htmlFor={field.label.replace(/ /g, '') + i} className={Styles.formLabel}>
+                    <label htmlFor={fieldId(field?.label, i)} className={Styles.formLabel}>
                       {field.label}
                       {field.required && <span>*</span>}
                     </label>
@@ -125,7 +141,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       type="text"
                       name={field.label}
                       className={Styles.formDefaultInput}
-                      id={field.label.replace(/ /g, '') + i}
+                      id={fieldId(field?.label, i)}
                       required={field.required ? true : undefined}
                     />
                   )}
@@ -134,7 +150,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       type="file"
                       name={field.label}
                       className={Styles.formDefaultInput}
-                      id={field.label.replace(/ /g, '') + i}
+                      id={fieldId(field?.label, i)}
                       required={field.required ? true : undefined}
                     />
                   )}
@@ -144,7 +160,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       name={field.label}
                       className={`${Styles.formDefaultInput} ${field?.inlineEmail ? 'flex-auto' : ''}`}
                       placeholder={field?.hideLabel ? field?.label : ''}
-                      id={field.label.replace(/ /g, '') + i}
+                      id={fieldId(field?.label, i)}
                       required={field.required ? true : undefined}
                     />
                   )}
@@ -153,7 +169,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       type="tel"
                       name={field.label}
                       className={Styles.formDefaultInput}
-                      id={field.label.replace(/ /g, '') + i}
+                      id={fieldId(field?.label, i)}
                       required={field.required ? true : undefined}
                     />
                   )}
@@ -165,11 +181,11 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                             <input
                               type="radio"
                               name={field.label}
-                              id={node.replace(/^[^A-Za-z0-9]+/g, '').replace(/[^A-Za-z0-9_\-:.]/g, '') + i}
+                              id={optionId(node, i)}
                               className="h-4 w-4 rounded border-gray-300"
                               required={field.required ? true : undefined}
                             />
-                            <label htmlFor={node.replace(/^[^A-Za-z0-9]+/g, '').replace(/[^A-Za-z0-9_\-:.]/g, '') + i} className={Styles.formInputList}>
+                            <label htmlFor={optionId(node, i)} className={Styles.formInputList}>
                               {node}
                             </label>
                           </div>
@@ -185,12 +201,12 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                             <input
                               type="checkbox"
                               name={field.label}
-                              id={node.replace(/^[^A-Za-z0-9]+/g, '').replace(/[^A-Za-z0-9_\-:.]/g, '') + i}
+                              id={optionId(node, i)}
                               className="h-4 w-4 rounded border-gray-300"
                               value={node}
                               required={field.required ? true : undefined}
                             />
-                            <label htmlFor={node.replace(/^[^A-Za-z0-9]+/g, '').replace(/[^A-Za-z0-9_\-:.]/g, '') + i} className={Styles.formInputList}>
+                            <label htmlFor={optionId(node, i)} className={Styles.formInputList}>
                               {node}
                             </label>
                           </div>
@@ -201,7 +217,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   {field.type === 'select' && (
                     <div className="flex items-center gap-x-3 mt-4">
                       <select
-                        id={field.label.replace(/ /g, '') + i}
+                        id={fieldId(field?.label, i)}
                         name={field.label}
                         className="block w-full rounded-md border py-1.5 text-gray-900 shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 bg-gray-100"
                         required={field.required ? true : undefined}
@@ -219,7 +235,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   {field.type === 'state' && (
                     <div className="flex items-center gap-x-3 mt-4">
                       <select
-                        id={field.label.replace(/ /g, '') + i}
+                        id={fieldId(field?.label, i)}
                         name={field.label}
                         className="block w-full rounded-md border py-1.5 text-gray-900 shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 bg-gray-100"
                         required={field.required ? true : undefined}
@@ -239,7 +255,7 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       name={field.label}
                       className={Styles.formDefaultInput}
                       rows={3}
-                      id={field.label.replace(/ /g, '') + i}
+                      id={fieldId(field?.label, i)}
                       required={field.required ? true : undefined}
                     />
                   )}

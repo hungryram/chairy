@@ -76,7 +76,7 @@ export default function CalltoActionTextImage({
     };
 
     useLayoutEffect(() => {
-        if (!ref.current) return null;
+        if (!ref.current) return;
         const onResize = () => {
             setOffsetTop(ref.current.offsetTop);
             setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));

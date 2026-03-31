@@ -50,8 +50,10 @@ export default function DisclosureGrid({
 }: Props) {
     const disclosures = Array.isArray(disclosure) ? disclosure : [];
 
-    function toPlainText(blocks: Block[] = []): string {
-        return blocks
+    function toPlainText(blocks: Block[] | any = []): string {
+        const safeBlocks = Array.isArray(blocks) ? blocks : [];
+
+        return safeBlocks
             .map((block: Block) => {
                 if (block._type !== 'block' || !block.children) {
                     return '';
