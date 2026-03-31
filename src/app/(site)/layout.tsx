@@ -202,7 +202,7 @@ export default async function RootLayout({
         }
       <ScrollProgress />
         {children}
-        <NewsletterPopup />
+        {/* <NewsletterPopup /> */}
         <Footer
           singleColumn={data?.appearances?.footer?.singleColumn}
           footerText={data.appearances?.footer?.footerText}
