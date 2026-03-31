@@ -9,6 +9,7 @@ import { interFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
 import NavbarWide from './components/global/navbar-wide'
 import ScrollProgress from './components/templates/scroll'
+import NewsletterPopup from './components/global/newsletter-popup'
 
 export const revalidate = 0;
 
@@ -201,6 +202,7 @@ export default async function RootLayout({
         }
       <ScrollProgress />
         {children}
+        <NewsletterPopup />
         <Footer
           singleColumn={data?.appearances?.footer?.singleColumn}
           footerText={data.appearances?.footer?.footerText}

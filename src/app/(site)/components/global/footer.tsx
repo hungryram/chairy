@@ -3,6 +3,7 @@ import Image from "next/image"
 import Social from "../templates/social"
 import ContentEditor from "../util/content-editor"
 import Styles from './footer.module.css'
+import NewsletterForm from './newsletter-form'
 
 interface Props {
   company_name: string
@@ -237,6 +238,11 @@ export default function Footer({
               </div>
             </div>
           }
+          <div className="mt-10 max-w-xl rounded-lg border border-white/10 bg-black/10 p-4">
+            <h3 className="mb-1">Newsletter</h3>
+            <p className="text-xs mb-3">Occasional updates. No spam.</p>
+            <NewsletterForm sourcePage="Footer" compact />
+          </div>
           <div className="border-t border-white/10 pt-4 mt-12">
             {footerDisclaimer &&
               <div className="text text-xs my-2">

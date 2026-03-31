@@ -156,3 +156,84 @@ export const submitForm = async (data) => {
         }
     }
 }
+
+export const submitNewsletter = async (_prevState, data) => {
+    const honeypot = data.get('name-honey') || '';
+    const email = (data.get('Email') || '').toString().trim();
+    const sourcePage = (data.get('sourcePage') || '').toString().trim();
+
+    if (honeypot.length > 0) {
+        return {
+            success: true,
+            message: 'Thanks for subscribing!'
+        };
+    }
+
+    if (!email) {
+        return {
+            success: false,
+            message: 'Please enter an email address.'
+        };
+    }
+
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!isValidEmail) {
+        return {
+            success: false,
+            message: 'Please enter a valid email address.'
+        };
+    }
+
+    if (!process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
+        return {
+            success: false,
+            message: 'Newsletter email service is not configured.'
+        };
+    }
+
+    const client = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN);
+
+    const htmlBody = `
+        <h2>New Newsletter Subscriber</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td><strong>Email</strong></td>
+              <td>${email}</td>
+            </tr>
+            <tr>
+              <td><strong>Source Page</strong></td>
+              <td>${sourcePage || 'Unknown'}</td>
+            </tr>
+          </tbody>
+        </table>
+    `;
+
+    try {
+        const response = await client.sendEmail({
+                    From: "Chairy Newsletter New Subscriber <forms@hungryramwebdesign.com>",
+          To: "info@chairyapp.com",
+          ReplyTo: email,
+          Subject: "Newsletter Subscription",
+          HtmlBody: htmlBody,
+        })
+
+        if (response?.Message === 'OK') {
+            return {
+                success: true,
+                message: 'Thanks for subscribing!'
+            };
+        }
+
+        return {
+            success: false,
+            message: 'Something went wrong. Please try again.'
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: 'Something went wrong. Please try again.'
+        };
+    }
+}

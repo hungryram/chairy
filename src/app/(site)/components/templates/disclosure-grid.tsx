@@ -91,7 +91,7 @@ export default function DisclosureGrid({
             />
             <div style={allStyles}>
                 <div className="container">
-                    <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+                    <div>
                         <div className="lg:col-span-5">
                             {(content || primaryButtonLink || secondaryButtonLink) && (
                                 <HeaderSection
@@ -108,7 +108,7 @@ export default function DisclosureGrid({
                                 />
                             )}
                         </div>
-                        <div className={`lg:col-span-7 ${content && 'mt-16'}`}>
+                        <div className={` ${content && 'mt-16'}`}>
                             {disclosure?.map((node: any) => {
                                 return (
                                     <div className="w-full" key={node._key}>
@@ -117,19 +117,19 @@ export default function DisclosureGrid({
                                                 {({ open }) => (
                                                     <>
                                                         <Disclosure.Button className="flex w-full justify-between rounded-md px-4 py-2 text-left" style={{
-                                                            background: `${disclosureBackgroundColor?.hex ?? 'var(--primary-button-background)'}`,
-                                                            color: `${disclosureTextColor?.hex ?? 'var(--primary-button-text)'}`
+                                                            background: `${disclosureBackgroundColor?.hex ?? 'transparent'}`,
+                                                            color: `${disclosureTextColor?.hex ?? '#fff'}`
                                                         }}>
                                                             {node?.heading && <span>{node.heading}</span>}
                                                             <FiChevronUp
                                                                 className={`${open ? 'rotate-180 transform' : ''
                                                                     } h-5 w-5`}
                                                                 style={{
-                                                                    color: `${disclosureTextColor?.hex ?? 'var(--primary-button-text)'}`
+                                                                    color: `${disclosureTextColor?.hex ?? '#fff'}`
                                                                 }}
                                                             />
                                                         </Disclosure.Button>
-                                                        <Disclosure.Panel className="px-4 pt-4 pb-2" style={{
+                                                        <Disclosure.Panel className="px-4 pt-4 pb-2 font-thin!" style={{
                                                             color: `${disclosureContentColor?.hex ?? '#000000'}`
                                                         }}>
                                                             {node.content &&
