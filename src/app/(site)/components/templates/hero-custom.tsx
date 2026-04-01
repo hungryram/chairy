@@ -1,17 +1,8 @@
 'use client'
-import React, { useRef, useState, useLayoutEffect } from "react";
-import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import React from "react";
 import Image from 'next/image';
 import HeaderSection from './header-section';
-import FormBuilder from './form-builder';
 import Animate from './animate';
-import Link from 'next/link';
-import {
-    useScroll,
-    useTransform,
-    useSpring,
-    motion
-} from "framer-motion";
 
 const calculateMinHeight = (height: any, range: any) => {
     return height + height * range;
@@ -55,39 +46,6 @@ export default function HeroCustom({
     formBuilder
 }: Props) {
 
-    const range = 0.9;
-    const { scrollY } = useScroll();
-    const ref = useRef();
-    const [offsetTop, setOffsetTop] = useState(0);
-    const [minHeight, setMinHeight] = useState("auto");
-    const springConfig = {
-        damping: 100,
-        stiffness: 100,
-        mass: rand(1, 3)
-    };
-
-    useLayoutEffect(() => {
-        if (!ref.current) return;
-        const onResize = () => {
-            setOffsetTop(ref.current.offsetTop);
-            setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
-        };
-
-        onResize();
-        window.addEventListener("resize", onResize);
-
-        return () => window.removeEventListener("resize", onResize);
-    }, [ref]);
-
-
-    const y = useSpring(
-        useTransform(
-            scrollY,
-            [offsetTop - 400, offsetTop + 400],
-            ["0%", `${range * 100}%`]
-        ),
-        springConfig
-    );
 
     return (
         <div className="bg-[#070808]" id="download">
@@ -138,8 +96,7 @@ export default function HeroCustom({
                         }
                     </div>
                     <div className="lg:w-1/2 mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
-                        <motion.div ref={ref} initial={{ y: 0 }} style={{ y }}>
-
+                        <div>
                             <Animate>
                                 {image &&
                                     <Image
@@ -152,7 +109,7 @@ export default function HeroCustom({
                                     />
                                 }
                             </Animate>
-                        </motion.div>
+                        </div>
                     </div>
                     <div
                         className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-40rem)]"

@@ -1,23 +1,29 @@
 import { urlForImage } from "../../../../../sanity/lib/image"
 import getYouTubeID from 'get-youtube-id'
-import Youtube from "react-youtube"
 
 const serializers = {
     types: {
         youtube: ({ value }) => {
-
-            const opts = {
-                height: `${value.height ?? '600'}`,
-                width: `${value.width ?? '400'}`,
-                playerVars: {
-                    // https://developers.google.com/youtube/player_parameters
-                    autoplay: 0,
-                },
-            };
-
-            const { url } = value
+            const { url } = value || {}
             const id = getYouTubeID(url)
-            return (<Youtube videoId={id} opts={opts} />)
+
+            if (!id) {
+                return null
+            }
+
+            return (
+                <div className="my-4 aspect-video w-full overflow-hidden rounded-lg">
+                    <iframe
+                        src={`https://www.youtube.com/embed/${id}?rel=0`}
+                        title={value?.title || 'YouTube video'}
+                        width={value?.width ?? '100%'}
+                        height={value?.height ?? '100%'}
+                        className="h-full w-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    />
+                </div>
+            )
         },
         image: ({ value }) => {
             return (

@@ -5,14 +5,7 @@ import * as HeroIcons from '@heroicons/react/24/outline';
 import HeaderSection from "./header-section";
 import Link from "next/link";
 import ContentEditor from "../util/content-editor";
-import React, { useRef, useState, useLayoutEffect } from "react";
-
-import {
-    useScroll,
-    useTransform,
-    useSpring,
-    motion
-} from "framer-motion";
+import React from "react";
 import Image from "next/image";
 import Animate from "./animate";
 
@@ -68,39 +61,6 @@ export default function FeaturedGridBox({
 
     const allStyles = { ...backgroundStyles, ...styles }
 
-    const range = 0.9;
-    const { scrollY } = useScroll();
-    const ref = useRef();
-    const [offsetTop, setOffsetTop] = useState(0);
-    const [minHeight, setMinHeight] = useState("auto");
-    const springConfig = {
-        damping: 100,
-        stiffness: 100,
-        mass: rand(1, 3)
-    };
-
-    useLayoutEffect(() => {
-        if (!ref.current) return;
-        const onResize = () => {
-            setOffsetTop(ref.current.offsetTop);
-            setMinHeight(calculateMinHeight(ref.current.offsetHeight, range));
-        };
-
-        onResize();
-        window.addEventListener("resize", onResize);
-
-        return () => window.removeEventListener("resize", onResize);
-    }, [ref]);
-
-
-    const y = useSpring(
-        useTransform(
-            scrollY,
-            [offsetTop - 400, offsetTop + 400],
-            ["0%", `${range * 100}%`]
-        ),
-        springConfig
-    );
 
     return (
         <div style={allStyles}>
