@@ -1,6 +1,7 @@
 'use client'
 import { Disclosure } from '@headlessui/react'
-import { FiChevronUp } from 'react-icons/fi'
+import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import { AnimatePresence, motion } from 'framer-motion'
 import ContentEditor from '../util/content-editor'
 import HeaderSection from './header-section'
 
@@ -94,7 +95,12 @@ export default function DisclosureGrid({
             />
             <div style={allStyles}>
                 <div className="container">
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                    >
                         <div className="lg:col-span-5">
                             {(content || primaryButtonLink || secondaryButtonLink) && (
                                 <HeaderSection
@@ -114,7 +120,14 @@ export default function DisclosureGrid({
                         <div className={` ${content && 'mt-16'}`}>
                             {disclosures.map((node: any) => {
                                 return (
-                                    <div className="w-full" key={node._key}>
+                                    <motion.div
+                                        className="w-full"
+                                        key={node._key}
+                                        initial={{ opacity: 0, y: 12 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.3 }}
+                                        transition={{ duration: 0.35, ease: 'easeOut' }}
+                                    >
                                         <div className="mx-auto w-full md:max-w-2xl rounded-2xl p-2">
                                             <Disclosure>
                                                 {({ open }) => (
@@ -123,33 +136,47 @@ export default function DisclosureGrid({
                                                             background: `${disclosureBackgroundColor?.hex ?? 'transparent'}`,
                                                             color: `${disclosureTextColor?.hex ?? '#fff'}`
                                                         }}>
-                                                            {node?.heading && <span>{node.heading}</span>}
-                                                            <FiChevronUp
-                                                                className={`${open ? 'rotate-180 transform' : ''
-                                                                    } h-5 w-5`}
+                                                            {node?.heading && <span className={open ? 'gradient-accent' : ''}>{node.heading}</span>}
+                                                            <ChevronUpIcon
+                                                                className={`${open ? 'rotate-180' : ''
+                                                                    } h-5 w-5 transform transition-transform duration-300`}
                                                                 style={{
                                                                     color: `${disclosureTextColor?.hex ?? '#fff'}`
                                                                 }}
                                                             />
                                                         </Disclosure.Button>
-                                                        <Disclosure.Panel className="px-4 pt-4 pb-2 font-thin!" style={{
-                                                            color: `${disclosureContentColor?.hex ?? '#000000'}`
-                                                        }}>
-                                                            {node.content &&
-                                                                <ContentEditor
-                                                                    content={node.content}
-                                                                />
-                                                            }
-                                                        </Disclosure.Panel>
+                                                        <AnimatePresence initial={false}>
+                                                            {open && (
+                                                                <Disclosure.Panel static as="div">
+                                                                    <motion.div
+                                                                        initial={{ height: 0, opacity: 0 }}
+                                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                                        exit={{ height: 0, opacity: 0 }}
+                                                                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                                                                        className="overflow-hidden"
+                                                                    >
+                                                                        <div className="px-4 pt-4 pb-2 font-thin!" style={{
+                                                                            color: `${disclosureContentColor?.hex ?? '#000000'}`
+                                                                        }}>
+                                                                            {node.content &&
+                                                                                <ContentEditor
+                                                                                    content={node.content}
+                                                                                />
+                                                                            }
+                                                                        </div>
+                                                                    </motion.div>
+                                                                </Disclosure.Panel>
+                                                            )}
+                                                        </AnimatePresence>
                                                     </>
                                                 )}
                                             </Disclosure>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 )
                             })}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </>

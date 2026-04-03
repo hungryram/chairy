@@ -5,9 +5,10 @@ import * as HeroIcons from '@heroicons/react/24/outline';
 import HeaderSection from "./header-section";
 import Link from "next/link";
 import ContentEditor from "../util/content-editor";
-import React from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Animate from "./animate";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 const calculateMinHeight = (height: any, range: any) => {
     return height + height * range;
@@ -60,6 +61,39 @@ export default function FeaturedGridBox({
     }
 
     const allStyles = { ...backgroundStyles, ...styles }
+
+    const range = 0.9;
+    const { scrollY } = useScroll();
+    const imageRef = useRef<HTMLDivElement | null>(null);
+    const [offsetTop, setOffsetTop] = useState(0);
+    const springConfig = {
+        damping: 100,
+        stiffness: 100,
+        mass: rand(1, 3)
+    };
+
+    useLayoutEffect(() => {
+        if (!imageRef.current) return;
+
+        const onResize = () => {
+            if (!imageRef.current) return;
+            setOffsetTop(imageRef.current.offsetTop);
+        };
+
+        onResize();
+        window.addEventListener("resize", onResize);
+
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    const y = useSpring(
+        useTransform(
+            scrollY,
+            [offsetTop - 400, offsetTop + 400],
+            ["0%", `${range * 100}%`]
+        ),
+        springConfig
+    );
 
 
     return (
@@ -151,13 +185,15 @@ export default function FeaturedGridBox({
                             </Animate>
                         </div>
                         <div className="lg:w-1/2">
-                            <Image
-                                src={'https://cdn.sanity.io/images/ez8qjsla/production/ff6163aba9f508c38e996032fb48f7379fa5caaa-1284x1506.jpg'}
-                                alt={'2 mobile phones mockup'}
-                                width={1824}
-                                height={1080}
-                                className="relative z-50"
-                            />
+                            <motion.div ref={imageRef} initial={{ y: 0 }} style={{ y }}>
+                                <Image
+                                    src={'https://cdn.sanity.io/images/ez8qjsla/production/ff6163aba9f508c38e996032fb48f7379fa5caaa-1284x1506.jpg'}
+                                    alt={'2 mobile phones mockup'}
+                                    width={1824}
+                                    height={1080}
+                                    className="relative z-50"
+                                />
+                            </motion.div>
                         </div>
                     </div>
                 </div>
