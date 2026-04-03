@@ -63,8 +63,8 @@ export default function FeatureSection({
                 )}
                 <div>
                     <div className="grid grid-cols-2 text-center content">
-                        <div><h2>Before</h2></div>
-                        <div><h2 className="gradient-accent">After</h2></div>
+                        <div><h2>Without Chairy</h2></div>
+                        <div><h2 className="gradient-accent">With Chairy</h2></div>
                     </div>
                     <dl className={`grid grid-cols-2 lg:grid-cols-${columnNumber} ${content && 'mt-16'} divide-y divide-solid divide-white/40 divide-x border border-white/40`}>
                         {blocks?.map((node: any) => {

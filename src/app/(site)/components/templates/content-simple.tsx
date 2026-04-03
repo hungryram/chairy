@@ -31,7 +31,7 @@ export default function ContentSimple({
             <div className={`${layoutType === 'twoColumn' && 'container'}`}>
                 <Animate>
                     {layoutType === 'twoColumn' &&
-                        <h2>{heading}</h2>
+                        <h2><span className="gradient-accent">{heading}</span></h2>
                     }
                     <div className={`mx-auto 
                 ${layoutType === 'simpleFullWidth' && 'container'}
