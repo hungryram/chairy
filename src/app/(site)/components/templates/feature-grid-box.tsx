@@ -187,7 +187,7 @@ export default function FeaturedGridBox({
                         <div className="lg:w-1/2">
                             <motion.div ref={imageRef} initial={{ y: 0 }} style={{ y }}>
                                 <Image
-                                    src={'https://cdn.sanity.io/images/ez8qjsla/production/ff6163aba9f508c38e996032fb48f7379fa5caaa-1284x1506.jpg'}
+                                    src={'https://cdn.sanity.io/images/ez8qjsla/production/efb341dfe4d518d5efcbd187453cc23fc7f96d85-1839x3840.png'}
                                     alt={'2 mobile phones mockup'}
                                     width={1824}
                                     height={1080}
