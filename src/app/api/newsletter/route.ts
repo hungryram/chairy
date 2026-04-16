@@ -54,7 +54,7 @@ export async function POST(request: Request) {
 
     const response = await client.sendEmail({
       From: 'Chairy Newsletter New Subscriber <forms@hungryramwebdesign.com>',
-      To: 'ram@hungryram.com',
+      To: 'Info@chairyapp.com',
       ReplyTo: email,
       Subject: 'Newsletter Subscription',
       HtmlBody: htmlBody,
