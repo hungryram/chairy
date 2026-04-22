@@ -35,4 +35,31 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Google Sheets Form Logging
+
+Form submissions can be sent directly to Google Sheets via the Google Sheets API using a service account.
+
+1. Add these values to your `.env.local` file:
+
+```bash
+SHEETS_CLIENT_EMAIL="your-service-account@project.iam.gserviceaccount.com"
+SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+
+# Optional defaults for form submissions
+SHEETS_DEFAULT_SPREADSHEET_ID=""
+SHEETS_DEFAULT_SHEET_NAME="Sheet1"
+
+# Optional defaults for newsletter submissions
+NEWSLETTER_SHEETS_SPREADSHEET_ID=""
+NEWSLETTER_SHEETS_SHEET_NAME="Sheet1"
+```
+
+2. Share your Google Sheet with the service account email as an Editor.
+
+3. For contact forms built with Sanity Form Builder, editors can set:
+	- `Google Spreadsheet ID`
+	- `Google Sheet Tab Name`
+
+If per-form values are set in Sanity, they are used. Otherwise, environment defaults are used.
+
 [vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhungryram%2Fchairy&repository-name=chairy&project-name=chairy&demo-title=Website%20with%20Built-in%20Content%20Editing&demo-description=A%20Sanity-powered%20blog%20with%20built-in%20content%20editing%20%26%20instant%20previews&demo-url=https%3A%2F%2Fnextjs-blog.sanity.build%2F%3Futm_source%3Dvercel%26utm_medium%3Dreferral&demo-image=https%3A%2F%2Fuser-images.githubusercontent.com%2F81981%2F197501516-c7c8092d-0305-4abe-afb7-1e896ef7b90a.png&integration-ids=oac_hb2LITYajhRQ0i4QznmKH7gx&external-id=nextjs;template=nextjs-blog-cms-sanity-v3

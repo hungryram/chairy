@@ -27,6 +27,8 @@ interface FormSchema {
   sendTo: string;
   sendFrom: string;
   redirectTo: string;
+  googleSheetId: string;
+  googleSheetName: string;
   buttonLabel: string;
   buttonBackgroundColor: any;
   buttonTextColor: any;
@@ -123,6 +125,8 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
         <input className="hidden" type="hidden" name="sendTo" value={formSchema?.sendTo} />
         <input className="hidden" type="hidden" name="subject" value={formSchema?.subject} />
         <input className="hidden" type="hidden" name="redirectTo" value={formSchema?.redirectTo} />
+        <input className="hidden" type="hidden" name="googleSheetId" value={formSchema?.googleSheetId} />
+        <input className="hidden" type="hidden" name="googleSheetName" value={formSchema?.googleSheetName} />
         {fields.length > 0 && (
           <div className="grid grid-cols-4 gap-x-2">
             {fields.map((field, i) => {

@@ -1,12 +1,16 @@
 'use server'
 import { ServerClient } from 'postmark'
 import { redirect } from 'next/navigation';
+import { sendToSheet } from '@/lib/google-sheets';
 
 export const submitForm = async (data) => {
 
     let formData = {}
+    let sheetData = {}
     let email = '';
     const honeypot = data.get('name-honey')
+    const googleSheetId = (data.get('googleSheetId') || '').toString().trim();
+    const googleSheetName = (data.get('googleSheetName') || '').toString().trim();
 
     data.forEach((value, name) => {
         if (
@@ -17,8 +21,18 @@ export const submitForm = async (data) => {
             name !== 'sendTo' &&
             name !== 'sendFrom' &&
             name !== 'subject' &&
-            name !== 'redirectTo'
+            name !== 'redirectTo' &&
+            name !== 'googleSheetId' &&
+            name !== 'googleSheetName'
         ) {
+            if (sheetData[name]) {
+                sheetData[name] = Array.isArray(sheetData[name])
+                    ? [...sheetData[name], value]
+                    : [sheetData[name], value];
+            } else {
+                sheetData[name] = value;
+            }
+
             if (name === 'Email') {
                 email = value;
             } else {
@@ -42,6 +56,10 @@ export const submitForm = async (data) => {
             Content: Buffer.from(fileData).toString('base64'),
             ContentType: file.type,
         };
+
+        sheetData.fileName = file.name;
+        sheetData.fileType = file.type;
+        sheetData.fileSize = file.size;
     }
 
     const tableRows = Object.entries(formData).map(([key, value]) => {
@@ -76,6 +94,15 @@ export const submitForm = async (data) => {
   `;
 
     if (honeypot.length === 0) {
+        await sendToSheet(
+            {
+            formType: 'contact',
+            ...sheetData,
+            },
+            googleSheetId || process.env.SHEETS_DEFAULT_SPREADSHEET_ID || '',
+            googleSheetName || process.env.SHEETS_DEFAULT_SHEET_NAME || 'Sheet1'
+        );
+
         if (process.env.HUBSPOT_API_KEY) {
             // Define the HubSpot API endpoint for form submissions
             const hubSpotEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${process.env.HUBSPOT_PORTAL_ID}/${process.env.HUBSPOT_FORM_ID}`
@@ -99,7 +126,9 @@ export const submitForm = async (data) => {
                     name !== 'sendTo' &&
                     name !== 'sendFrom' &&
                     name !== 'subject' &&
-                    name !== 'redirectTo'
+                    name !== 'redirectTo' &&
+                    name !== 'googleSheetId' &&
+                    name !== 'googleSheetName'
                 ) {
                     formData.fields.push({
                         name,
@@ -161,6 +190,8 @@ export const submitNewsletter = async (_prevState, data) => {
     const honeypot = data.get('name-honey') || '';
     const email = (data.get('Email') || '').toString().trim();
     const sourcePage = (data.get('sourcePage') || '').toString().trim();
+    const googleSheetId = (data.get('googleSheetId') || '').toString().trim();
+    const googleSheetName = (data.get('googleSheetName') || '').toString().trim();
 
     if (honeypot.length > 0) {
         return {
@@ -183,6 +214,16 @@ export const submitNewsletter = async (_prevState, data) => {
             message: 'Please enter a valid email address.'
         };
     }
+
+    await sendToSheet(
+        {
+            formType: 'newsletter',
+            Email: email,
+            sourcePage: sourcePage || 'Unknown',
+        },
+        googleSheetId || process.env.NEWSLETTER_SHEETS_SPREADSHEET_ID || '',
+        googleSheetName || process.env.NEWSLETTER_SHEETS_SHEET_NAME || 'Sheet1'
+    );
 
     if (!process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
         return {
@@ -212,7 +253,7 @@ export const submitNewsletter = async (_prevState, data) => {
     try {
         const response = await client.sendEmail({
                     From: "Chairy Newsletter New Subscriber <forms@hungryramwebdesign.com>",
-          To: "info@chairyapp.com",
+          To: "Info@chairyapp.com",
           ReplyTo: email,
           Subject: "Newsletter Subscription",
           HtmlBody: htmlBody,

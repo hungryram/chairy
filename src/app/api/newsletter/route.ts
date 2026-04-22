@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
+import { sendToSheet } from '@/lib/google-sheets';
 
 export async function POST(request: Request) {
   try {
@@ -7,6 +8,8 @@ export async function POST(request: Request) {
     const honeypot = (formData.get('name-honey') || '').toString();
     const email = (formData.get('Email') || '').toString().trim();
     const sourcePage = (formData.get('sourcePage') || '').toString().trim();
+    const googleSheetId = (formData.get('googleSheetId') || '').toString().trim();
+    const googleSheetName = (formData.get('googleSheetName') || '').toString().trim();
 
     if (honeypot.length > 0) {
       return NextResponse.json({ success: true, message: 'Thanks for subscribing!' });
@@ -26,6 +29,16 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    await sendToSheet(
+      {
+        formType: 'newsletter',
+        Email: email,
+        sourcePage: sourcePage || 'Unknown',
+      },
+      googleSheetId || process.env.NEWSLETTER_SHEETS_SPREADSHEET_ID || '',
+      googleSheetName || process.env.NEWSLETTER_SHEETS_SHEET_NAME || 'Sheet1'
+    );
 
     if (!process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
       return NextResponse.json(

@@ -42,6 +42,18 @@ export default defineType({
             description: 'Enter the URL the form redirects to after submitting',
         },
         {
+            title: 'Google Spreadsheet ID',
+            name: 'googleSheetId',
+            type: 'string',
+            description: 'Optional spreadsheet ID to store this form\'s submissions in Google Sheets',
+        },
+        {
+            title: 'Google Sheet Tab Name',
+            name: 'googleSheetName',
+            type: 'string',
+            description: 'Optional tab name in the spreadsheet (defaults to Sheet1)',
+        },
+        {
             title: 'Button Label',
             name: 'buttonLabel',
             type: 'string',
