@@ -6,19 +6,23 @@ const serializers = {
         youtube: ({ value }) => {
             const { url } = value || {}
             const id = getYouTubeID(url)
+            const customHeight = value?.height
+            const hasCustomHeight = customHeight !== undefined && customHeight !== null && customHeight !== ''
+            const iframeHeight = typeof customHeight === 'number' ? `${customHeight}px` : customHeight
 
             if (!id) {
                 return null
             }
 
             return (
-                <div className="my-4 aspect-video w-full overflow-hidden rounded-lg">
+                <div className={`my-10 w-full overflow-hidden rounded-lg ${hasCustomHeight ? '' : 'aspect-video'}`}>
                     <iframe
                         src={`https://www.youtube.com/embed/${id}?rel=0`}
                         title={value?.title || 'YouTube video'}
                         width={value?.width ?? '100%'}
-                        height={value?.height ?? '100%'}
-                        className="h-full w-full border-0"
+                        height={hasCustomHeight ? iframeHeight : '100%'}
+                        style={hasCustomHeight ? { height: iframeHeight } : undefined}
+                        className={`w-full border-0 ${hasCustomHeight ? '' : 'h-full'}`}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                     />
