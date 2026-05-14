@@ -45,7 +45,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
     'https://cdn.sanity.io/images/ez8qjsla/production/ca284cf0ef93d709b2992a988e41475900566be7-4992x4920.webp?auto=format&w=1200&q=72',
   ];
 
-  const steps = ['List your available chairs', 'Set your availability', 'Start earning from unused space'];
+  const steps = ['List your available chairs', 'Set your price and availability', 'Start earning from unused space'];
 
   const foundingBenefits = [
     '6 months of premium features, free',
@@ -74,7 +74,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         }}
       />
 
-      <section className="relative mx-auto grid container gap-8 px-4 pb-12 pt-20 md:grid-cols-2 md:items-center md:pt-28 lg:px-8">
+      <section className="relative mx-auto grid container gap-8 px-4 pb-12 pt-40 md:grid-cols-2 md:items-center md:pt-28 lg:px-8">
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-[#fdaf6b]">Welcome to Chairy</p>
           <h1 className="text-5xl font-semibold leading-[0.95] tracking-tight md:text-6xl">
@@ -198,7 +198,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
                 quality={72}
                 className="h-[360px] w-full rounded-md object-cover md:h-[390px]"
               />
-              <figcaption className="px-2 pb-2 pt-2 text-xs text-[#9ca3af]">
+              <figcaption className="px-2 pb-2 h-full text-sm text-[#9ca3af] text-center py-8">
                 {i === 0 && 'See demand in your area instantly'}
                 {i === 1 && 'Get booked without calls or DMs'}
                 {i === 2 && 'List your chair in under a minute'}
