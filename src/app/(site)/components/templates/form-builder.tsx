@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { submitForm } from './_formActions'
+import { useFormStatus } from 'react-dom';
 import Styles from "./form-builder.module.css"
 import ContentEditor from '../util/content-editor';
 
@@ -109,6 +110,50 @@ const optionId = (value: unknown, index: number): string => {
     .replace(/^[^A-Za-z0-9]+/g, '')
     .replace(/[^A-Za-z0-9_\-:.]/g, '')}${index}`;
 };
+
+function SubmitButton({
+  label,
+  backgroundColor,
+  textColor,
+}: {
+  label: string;
+  backgroundColor?: string;
+  textColor?: string;
+}) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      aria-busy={pending}
+      className="primary-button ml-2 mb-2 inline-flex items-center gap-2 disabled:opacity-80"
+      style={{
+        backgroundColor,
+        color: textColor,
+      }}
+    >
+      {pending && (
+        <svg
+          className="h-4 w-4 animate-spin"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
+          <path
+            d="M4 12a8 8 0 018-8"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="opacity-90"
+          />
+        </svg>
+      )}
+      {pending ? 'Submitting...' : label}
+    </button>
+  );
+}
 
 
 export default function FormBuilder({ formSchema }: FormBuilderProps) {
@@ -276,12 +321,11 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
           </div>
         }
         <div className="flex justify-end">
-          <button type="submit" className="primary-button ml-2 mb-2" style={{
-            backgroundColor: formSchema?.buttonBackgroundColor?.hex,
-            color: formSchema?.buttonTextColor?.hex
-          }}>
-            {formSchema?.buttonLabel ?? 'Submit'}
-          </button>
+          <SubmitButton
+            label={formSchema?.buttonLabel ?? 'Submit'}
+            backgroundColor={formSchema?.buttonBackgroundColor?.hex}
+            textColor={formSchema?.buttonTextColor?.hex}
+          />
         </div>
       </form>
     </div>

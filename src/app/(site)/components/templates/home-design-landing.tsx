@@ -86,8 +86,8 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link href="#list-your-shop" className="primary-button !bg-[#EE4C2C] !text-white">
-              List Your Shop (Founding Access)
+            <Link href="/founding-shops" className="primary-button !bg-[#EE4C2C] !text-white">
+              List Your Shop
             </Link>
             <Link href="#download-app" className="text-sm font-semibold text-[#c7cad1] underline underline-offset-4">
               Download the App
@@ -123,7 +123,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
           </div>
 
           <div className="mt-6">
-            <Link href="#list-your-shop" className="primary-button inline-flex !bg-[#EE4C2C] !text-white">
+            <Link href="/founding-shops" className="primary-button inline-flex !bg-[#EE4C2C] !text-white">
               Secure Your Spot
             </Link>
             <p className="mt-2 text-sm font-normal text-[#fdaf6b]/80">Only 200 spots available.</p>
@@ -163,7 +163,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             ))}
           </div>
           <div className="mt-8">
-            <Link href="#list-your-shop" className="primary-button !bg-[#EE4C2C] !text-white">
+            <Link href="/founding-shops" className="primary-button !bg-[#EE4C2C] !text-white">
               List Your Shop
             </Link>
           </div>
@@ -232,7 +232,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             We are onboarding barbershops first. Join early to be notified when chairs become available near you.
           </p>
           <div className="mt-7">
-            <a href={joinEarlyLink} className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
+            <a href='/founding-shops' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
               Join Early Access
             </a>
           </div>
@@ -264,7 +264,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div className="content p-6 text-center md:p-8">
           <h2 className="text-4xl font-semibold tracking-tight md:text-6xl">Start Turning Empty Chairs Into Income</h2>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link href="#list-your-shop" className="primary-button !bg-[#EE4C2C] !text-white">
+            <Link href="/founding-shops" className="primary-button !bg-[#EE4C2C] !text-white">
               List Your Shop
             </Link>
             <a href={APPLE_STORE_LINK} target="_blank" rel="noreferrer" className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
