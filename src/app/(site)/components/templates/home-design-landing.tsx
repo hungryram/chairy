@@ -232,7 +232,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             We are onboarding barbershops first. Join early to be notified when chairs become available near you.
           </p>
           <div className="mt-7">
-            <a href='/founding-shops' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
+            <a href='/professional-sign-up' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
               Join Early Access
             </a>
           </div>
