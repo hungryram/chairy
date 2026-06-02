@@ -58,6 +58,30 @@ const normalizeHubSpotFieldName = (name: string): string => {
   return COMMON_FIELD_NAME_MAP[normalized] || name.toString().trim();
 };
 
+const resolveContactPropertyName = (name: string): string | null => {
+  const normalized = name.toString().trim().toLowerCase().replace(/[_-]+/g, ' ');
+  const mapped = COMMON_FIELD_NAME_MAP[normalized] || normalized;
+
+  if (CONTACT_PROPERTY_ALLOWLIST.has(mapped)) {
+    return mapped;
+  }
+
+  if (normalized.includes('email')) return 'email';
+  if (normalized.includes('first') && normalized.includes('name')) return 'firstname';
+  if (normalized.includes('last') && normalized.includes('name')) return 'lastname';
+  if (normalized.includes('phone') || normalized.includes('mobile')) return 'phone';
+  if (normalized.includes('company') || normalized.includes('business')) return 'company';
+  if (normalized.includes('website') || normalized.includes('site')) return 'website';
+  if (normalized.includes('address')) return 'address';
+  if (normalized.includes('city')) return 'city';
+  if (normalized.includes('state')) return 'state';
+  if (normalized.includes('zip') || normalized.includes('postal')) return 'zip';
+  if (normalized.includes('country')) return 'country';
+  if (normalized.includes('title') || normalized.includes('role')) return 'jobtitle';
+
+  return null;
+};
+
 const isFileValue = (value: FormDataEntryValue): value is File => value instanceof File;
 
 const buildContactProperties = (formData: FormData): Record<string, string> => {
@@ -70,10 +94,10 @@ const buildContactProperties = (formData: FormData): Record<string, string> => {
       return;
     }
 
-    const normalizedName = normalizeHubSpotFieldName(name);
+    const normalizedName = resolveContactPropertyName(name);
     const normalizedValue = value.toString().trim();
 
-    if (!normalizedValue || !CONTACT_PROPERTY_ALLOWLIST.has(normalizedName)) {
+    if (!normalizedName || !normalizedValue) {
       return;
     }
 
@@ -96,6 +120,11 @@ export const upsertContactViaCRM = async (formData: FormData): Promise<boolean> 
   const email = (properties.email || formData.get('Email') || formData.get('email') || '').toString().trim();
 
   if (!email) {
+    const submittedFieldNames: string[] = [];
+    formData.forEach((_value, rawName) => {
+      submittedFieldNames.push(rawName.toString());
+    });
+    console.error('HubSpot upsert skipped: no email detected in form payload.', submittedFieldNames);
     return false;
   }
 

@@ -40,6 +40,10 @@ export default function Example({
 
   const [scroll, setScroll] = useState(false);
 
+  const getItemKey = (item: any, index: number, prefix: string) => {
+    return item?._key || item?._id || item?.slug?.current || item?.text || `${prefix}-${index}`;
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScroll(window.scrollY > 200);
@@ -97,7 +101,7 @@ export default function Example({
             </Link>
           </div>
           <div className={Styles.desktopMenuContainer}>
-            {navItems?.map((link: any) => {
+            {navItems?.map((link: any, linkIndex: number) => {
 
               const menuLinks =
                 (link.internalLink?._type === "pages" && `/${link.internalLink.slug}`) ||
@@ -109,7 +113,7 @@ export default function Example({
 
               if (link?.subMenu?.length > 0) {
                 return (
-                  <Popover className="relative" key={link._key}>
+                  <Popover className="relative" key={getItemKey(link, linkIndex, 'desktop-nav')}>
                     {({ open }) => (
                       <>
                         <Popover.Button
@@ -134,7 +138,7 @@ export default function Example({
                           <Popover.Panel className={Styles.desktopPopOverPanel}>
                             <div className="rounded-sm shadow-lg overflow-hidden">
                               <div className={Styles.desktopDropDown}>
-                                {link?.subMenu?.map((sub: any) => {
+                                {link?.subMenu?.map((sub: any, subIndex: number) => {
 
                                   const subMenuLinks =
                                     (sub.internalLink?._type === "blog" && `/blog/${sub.internalLink.slug}`) ||
@@ -147,7 +151,7 @@ export default function Example({
                                   return (
                                     <Popover.Button
                                       as={Link}
-                                      key={sub._key}
+                                      key={getItemKey(sub, subIndex, 'desktop-submenu')}
                                       href={subMenuLinks ?? '/'}
                                       target={sub.newTab && '_blank'}
                                       className={`${Styles.navLinks} text-black py-2`}
@@ -167,7 +171,7 @@ export default function Example({
               } else {
                 return (
                   <Link
-                    key={link._id}
+                    key={getItemKey(link, linkIndex, 'desktop-link')}
                     href={menuLinks}
                     className={Styles.navLinks}>
                     {link.text}
@@ -236,7 +240,7 @@ export default function Example({
 
             <Disclosure.Panel className="lg:hidden bg-black">
               <div className="space-y-1 pb-3 pt-2 px-4">
-                {navItems?.map((link: any) => {
+                {navItems?.map((link: any, linkIndex: number) => {
                   const menuLinks =
                     (link.internalLink?._type === "pages" && `/${link.internalLink.slug}`) ||
                     (link.internalLink?._type === "blog" && `/blog/${link.internalLink.slug}`) ||
@@ -247,7 +251,7 @@ export default function Example({
 
                   if (link?.subMenu?.length > 0) {
                     return (
-                      <Popover className="relative" key={link._key}>
+                      <Popover className="relative" key={getItemKey(link, linkIndex, 'mobile-nav')}>
                         {({ open }) => (
                           <>
                             <Popover.Button
@@ -272,7 +276,7 @@ export default function Example({
                               <Popover.Panel className="z-50 -ml-4 transform px-2 w-screen max-w-xs sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                                 <div className="overflow-hidden">
                                   <div className="relative grid lg:bg-white px-5 py-3">
-                                    {link?.subMenu?.map((sub: any) => {
+                                    {link?.subMenu?.map((sub: any, subIndex: number) => {
 
                                       const subMenuLinks =
                                         (sub.internalLink?._type === "blog" && `/blog/${sub.internalLink.slug}`) ||
@@ -283,7 +287,7 @@ export default function Example({
                                         (sub.externalUrl && `${sub.externalUrl}`)
 
                                       return (
-                                        <Disclosure.Button as={Link} href={subMenuLinks ?? '/'} className={Styles.navLinks} target={sub.newTab && '_blank'} key={sub._key}>
+                                        <Disclosure.Button as={Link} href={subMenuLinks ?? '/'} className={Styles.navLinks} target={sub.newTab && '_blank'} key={getItemKey(sub, subIndex, 'mobile-submenu')}>
                                           {sub.text}
                                         </Disclosure.Button>
                                       )
@@ -298,7 +302,7 @@ export default function Example({
                     )
                   } else {
                     return (
-                      <Disclosure.Button as={Link} href={menuLinks ?? '/'} className={Styles.navLinks} target={link.newTab && '_blank'} key={link._key}>
+                      <Disclosure.Button as={Link} href={menuLinks ?? '/'} className={Styles.navLinks} target={link.newTab && '_blank'} key={getItemKey(link, linkIndex, 'mobile-link')}>
                         {link.text}
                       </Disclosure.Button>
                     )
