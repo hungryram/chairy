@@ -7,8 +7,8 @@ interface HomeDesignLandingProps {
   contactEmail?: string;
 }
 
-const APPLE_STORE_LINK = 'https://apps.apple.com/us/app/chairy/id6463957222';
-const GOOGLE_PLAY_LINK = 'https://play.google.com/store/apps/details?id=com.chairyapp.chairy&hl=en_US&gl=US';
+const APPLE_STORE_LINK = 'https://apps.apple.com/us/app/chairy/id6761076049';
+const GOOGLE_PLAY_LINK = 'https://play.google.com/store/apps/details?id=com.chairyapp';
 const APPLE_BADGE = 'https://cdn.sanity.io/images/ez8qjsla/production/0e92934930b948baf4a4f8cf7afd40343539871b-120x40.svg';
 const GOOGLE_BADGE = 'https://cdn.sanity.io/images/ez8qjsla/production/b7710ef006d9bffe7346f20190d5e7c12e9285bd-564x168.png';
 
