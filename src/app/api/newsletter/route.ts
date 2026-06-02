@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ServerClient } from 'postmark';
 import { sendToSheet } from '@/lib/google-sheets';
+import { submitLeadToHubSpot } from '../../../lib/hubspot';
 
 export async function POST(request: Request) {
   try {
@@ -39,6 +40,8 @@ export async function POST(request: Request) {
       googleSheetId || process.env.NEWSLETTER_SHEETS_SPREADSHEET_ID || '',
       googleSheetName || process.env.NEWSLETTER_SHEETS_SHEET_NAME || 'Sheet1'
     );
+
+    await submitLeadToHubSpot(formData);
 
     if (!process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
       return NextResponse.json(

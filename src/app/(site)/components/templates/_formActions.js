@@ -2,6 +2,7 @@
 import { ServerClient } from 'postmark'
 import { redirect } from 'next/navigation';
 import { sendToSheet } from '@/lib/google-sheets';
+import { submitLeadToHubSpot } from '../../../../lib/hubspot';
 
 export const submitForm = async (data) => {
 
@@ -9,6 +10,7 @@ export const submitForm = async (data) => {
     let sheetData = {}
     let email = '';
     const honeypot = data.get('name-honey')
+    const redirectTo = (data.get('redirectTo') || '').toString().trim();
     const googleSheetId = (data.get('googleSheetId') || '').toString().trim();
     const googleSheetName = (data.get('googleSheetName') || '').toString().trim();
 
@@ -103,62 +105,7 @@ export const submitForm = async (data) => {
             googleSheetName || process.env.SHEETS_DEFAULT_SHEET_NAME || 'Sheet1'
         );
 
-        if (process.env.HUBSPOT_API_KEY) {
-            // Define the HubSpot API endpoint for form submissions
-            const hubSpotEndpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${process.env.HUBSPOT_PORTAL_ID}/${process.env.HUBSPOT_FORM_ID}`
-
-            // Create an object to hold the form data
-            const formData = {
-                fields: [],
-                context: {
-                    hutk: data.get('hutk'), // HubSpot tracking cookie (if needed)
-                    ipAddress: data.get('ipAddress'), // User's IP address (if needed)
-                },
-            };
-
-            // Add form fields to the formData object
-            data.forEach((value, name) => {
-                if (
-                    !name.includes('$ACTION_ID') &&
-                    name !== 'bcc' &&
-                    name !== 'cc' &&
-                    name !== 'name-honey' &&
-                    name !== 'sendTo' &&
-                    name !== 'sendFrom' &&
-                    name !== 'subject' &&
-                    name !== 'redirectTo' &&
-                    name !== 'googleSheetId' &&
-                    name !== 'googleSheetName'
-                ) {
-                    formData.fields.push({
-                        name,
-                        value,
-                    });
-                }
-            });
-
-            // Make a POST request to HubSpot API to submit the form data
-            try {
-                const response = await fetch(hubSpotEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${process.env.HUBSPOT_API_KEY}`,
-                    },
-                    body: JSON.stringify(formData),
-                });
-
-                if (response.ok) {
-                    console.log('it sent OKAY')
-                } else {
-                    console.error('Error submitting form data to HubSpot', response.status);
-                }
-            } catch (error) {
-                console.error('Error submitting form data to HubSpot', error);
-            }
-        } else {
-            console.error("HubSpot API key is missing.");
-        }
+        await submitLeadToHubSpot(data);
     }
 
     if (honeypot.length === 0) {
@@ -177,11 +124,15 @@ export const submitForm = async (data) => {
                 .then((res) => res)
                 .catch((err) => console.error(err))
 
-            if (response?.Message === 'OK') {
-                return redirect(`${data.get('redirectTo')}`)
+            if (response?.Message !== 'OK') {
+                console.error('Postmark sendEmail did not return OK.');
             }
         } else {
             console.error("Postmark API token is missing.");
+        }
+
+        if (redirectTo) {
+            return redirect(redirectTo)
         }
     }
 }
@@ -224,6 +175,8 @@ export const submitNewsletter = async (_prevState, data) => {
         googleSheetId || process.env.NEWSLETTER_SHEETS_SPREADSHEET_ID || '',
         googleSheetName || process.env.NEWSLETTER_SHEETS_SHEET_NAME || 'Sheet1'
     );
+
+    await submitLeadToHubSpot(data);
 
     if (!process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
         return {
