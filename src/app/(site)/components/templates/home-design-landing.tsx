@@ -48,10 +48,10 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
   const steps = ['List your available chairs', 'Set your price and availability', 'Start earning from unused space'];
 
   const foundingBenefits = [
-    '6 months of premium features, free',
-    'Priority placement in search',
-    'Founding Shop badge',
-    'Featured across Chairy marketing and social',
+    '6 Months Of Premium Features, Free',
+    'Priority Placement In Search',
+    'Founding Shop Badge On Profile',
+    'Featured Across Chairy Marketing And Social',
   ];
 
   const whyChairy = [
