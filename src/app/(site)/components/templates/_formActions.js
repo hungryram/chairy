@@ -4,6 +4,21 @@ import { redirect } from 'next/navigation';
 import { sendToSheet } from '@/lib/google-sheets';
 import { submitLeadToHubSpot } from '../../../../lib/hubspot';
 
+const splitRecipients = (value) => {
+    return (value || '')
+        .toString()
+        .split(/[;,\n]+/)
+        .map((entry) => entry.trim())
+        .filter(Boolean);
+};
+
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+const normalizeRecipients = (value) => {
+    const unique = Array.from(new Set(splitRecipients(value)));
+    return unique.filter((email) => isValidEmail(email));
+};
+
 export const submitForm = async (data) => {
 
     let formData = {}
@@ -111,21 +126,36 @@ export const submitForm = async (data) => {
     if (honeypot.length === 0) {
         if (process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN) {
             const client = new ServerClient(process.env.NEXT_PUBLIC_POSTMARK_API_TOKEN);
+            const toRecipients = normalizeRecipients(data.get('sendTo'));
+            const ccRecipients = normalizeRecipients(data.get('cc'));
+            const bccRecipients = normalizeRecipients(data.get('bcc'));
 
-            const response = await client.sendEmail({
-                "From": data.get('sendFrom'), // must match sender signature on postmark account
-                "To": data.get('sendTo'),
-                "Bcc": data.get('bcc'),
-                "Cc": data.get('cc'),
-                "ReplyTo": email,
-                "Subject": data.get('subject'),
-                "HtmlBody": htmlBody,
-            })
-                .then((res) => res)
-                .catch((err) => console.error(err))
+            if (toRecipients.length === 0) {
+                console.error('Postmark send skipped: no valid recipient found in sendTo.', data.get('sendTo'));
+            } else {
+                const invalidTo = splitRecipients(data.get('sendTo')).filter((item) => !isValidEmail(item));
+                if (invalidTo.length > 0) {
+                    console.error('Invalid recipient(s) removed from sendTo:', invalidTo);
+                }
 
-            if (response?.Message !== 'OK') {
-                console.error('Postmark sendEmail did not return OK.');
+                const response = await client.sendEmail({
+                    "From": data.get('sendFrom'), // must match sender signature on postmark account
+                    "To": toRecipients.join(','),
+                    "Bcc": bccRecipients.join(','),
+                    "Cc": ccRecipients.join(','),
+                    "ReplyTo": email,
+                    "Subject": data.get('subject'),
+                    "HtmlBody": htmlBody,
+                })
+                    .then((res) => res)
+                    .catch((err) => {
+                        console.error('Postmark sendEmail threw an error:', err);
+                        return null;
+                    })
+
+                if (response?.Message !== 'OK') {
+                    console.error('Postmark sendEmail did not return OK.', response);
+                }
             }
         } else {
             console.error("Postmark API token is missing.");

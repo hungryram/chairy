@@ -57,7 +57,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
   const whyChairy = [
     'No contracts or long-term commitments',
     'Earn from chairs you already have',
-    'Designed specifically for barbershops',
+    'Designed specifically for barbershops and salons',
     'Simple, fast, mobile-first',
   ];
 
@@ -81,7 +81,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             Stop Letting Empty Chairs Cost You Money
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-[#c7cad1]">
-            Chairy helps barbershops turn unused chairs into income by connecting you with barbers and stylists
+            Chairy helps barbershops and salons turn unused chairs into income by connecting you with barbers and stylists
             looking for space, on demand.
           </p>
 
@@ -94,6 +94,14 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             </Link>
           </div>
           <p className="mt-3 text-sm text-[#9ca3af]">No contracts. Setup takes minutes.</p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <a href={APPLE_STORE_LINK} target="_blank" rel="noreferrer" aria-label="Download on App Store">
+              <img src={APPLE_BADGE} width="140" alt="Download on the App Store" />
+            </a>
+            <a href={GOOGLE_PLAY_LINK} target="_blank" rel="noreferrer" aria-label="Get it on Google Play">
+              <img src={GOOGLE_BADGE} width="150" alt="Get it on Google Play" />
+            </a>
+          </div>
         </div>
 
         <div className="relative mx-auto w-full max-w-xl">
@@ -105,7 +113,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div className="content rounded-2xl border border-white/[0.03] p-6 md:p-8" style={{ backgroundImage: 'radial-gradient(600px at 50% 50%, rgba(238,76,44,0.03), transparent 80%)' }}>
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#fdaf6b]">Founding Offer</p>
           <h2 className="mt-3 text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-            Be One of the First 200 Barbershops on Chairy
+            Be One of the First 200 Barbershops and Salons on Chairy
           </h2>
           <p className="mt-4 max-w-3xl text-[#d0d4db]">
             Early shops get priority visibility, premium features, and a head start before the platform scales.
@@ -134,7 +142,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
       <section className="mx-auto grid container gap-8 px-4 py-12 md:grid-cols-2 md:items-center lg:px-8">
         <div className="content">
           <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Every Empty Chair Is Lost Revenue</h2>
-          <p className="mt-5 text-[#c7cad1]">Slow days, cancellations, and unused chairs quietly cost barbershops money every week.</p>
+          <p className="mt-5 text-[#c7cad1]">Slow days, cancellations, and unused chairs quietly cost barbershops and salons money every week.</p>
           <p className="mt-4 text-[#c7cad1]">
             At the same time, barbers and stylists are actively looking for places to work. Chairy connects both, so
             your space does not sit idle.
@@ -143,7 +151,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div className="relative overflow-hidden rounded-2xl border border-white/[0.02]" style={{ backgroundImage: 'radial-gradient(800px at 50% 50%, rgba(253,175,107,0.02), transparent 80%)' }}>
           <Image
             src={supportImage}
-            alt="Barbershop with available chair"
+            alt="Barbershop or salon with available chair"
             width={1200}
             height={900}
             className="h-[360px] w-full rounded-xl object-cover"
@@ -211,7 +219,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
 
       <section className="mx-auto container px-4 py-6 lg:px-8">
         <div className="content rounded-2xl border border-white/5 p-6 md:p-8">
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built for Real Barbershops</h2>
+          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built for Real Barbershops and Salons</h2>
           <div className="mt-6 rounded-xl bg-black/20 p-4 md:p-6">
             <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
               {whyChairy.map((item) => (
@@ -229,7 +237,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div className="content rounded-2xl border border-[#fdaf6b]/[0.03] p-6 md:p-8">
           <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">For Barbers and Stylists</h2>
           <p className="mt-4 max-w-3xl text-[#c7cad1]">
-            We are onboarding barbershops first. Join early to be notified when chairs become available near you.
+            We are onboarding barbershops and salons first. Join early to be notified when chairs become available near you.
           </p>
           <div className="mt-7">
             <a href='/professional-sign-up' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
