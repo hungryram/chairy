@@ -81,8 +81,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
             Stop Letting Empty Chairs Cost You Money
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-[#c7cad1]">
-            Chairy helps barbershops and salons turn unused chairs into income by connecting you with barbers and stylists
-            looking for space, on demand.
+Chairy helps Barbershops and Salons turn unused chairs into income by connecting you with Barbers and Hairstylists looking for space, on demand.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -235,9 +234,9 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
 
       <section id="join-early" className="mx-auto container px-4 py-6 lg:px-8">
         <div className="content rounded-2xl border border-[#fdaf6b]/[0.03] p-6 md:p-8">
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">For Barbers and Stylists</h2>
+          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">For Barbers and Hairstylists</h2>
           <p className="mt-4 max-w-3xl text-[#c7cad1]">
-            We are onboarding barbershops and salons first. Join early to be notified when chairs become available near you.
+            We are onboarding Barbershops and Salons first. Join Early Access to be notified when chairs and cities become available near you.
           </p>
           <div className="mt-7">
             <a href='/professional-sign-up' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
@@ -250,7 +249,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
       <section className="mx-auto container px-4 py-6 lg:px-8">
         <div className="content grid gap-6 rounded-2xl border border-white/[0.02] p-6 md:grid-cols-2 md:items-center md:p-8" style={{ backgroundImage: 'radial-gradient(800px at 50% 50%, rgba(238,76,44,0.02), transparent 80%)' }}>
           <div>
-            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built by Someone in the Industry</h2>
+            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built by a Barber in the Industry</h2>
             <p className="mt-4 text-[#c7cad1]">
               Chairy was created after seeing the same issue daily, empty chairs in shops, while barbers struggled to
               find places to work. This platform was built to fix that.
