@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <link rel="icon" type="image/png" href="https://chairyapp-bucket.s3.us-east-2.amazonaws.com/1782797729296.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Dark theme (default) */
+    :root {
+      --bg: #0d0d0f;
+      --card: #19191c;
+      --ink: #f5f4f2;
+      --ink-soft: #a6a39c;
+      --border: #2a2a2e;
+      --muted: #232326;
+      --orange: #ff8a1f;
+      --orange-dark: #e26800;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
+      --radius: 18px;
+      --topbar-bg: rgba(13, 13, 15, .85);
+      --pricebar-bg: #232326;
+      --pricebar-ink: #f5f4f2;
+      --notice-bg: #241a10;
+      --notice-border: #4a3216;
+      --notice-ink: #ffb26b;
+    }
+
+    /* Light theme */
+    [data-theme="light"] {
+      --bg: #faf9f7;
+      --card: #ffffff;
+      --ink: #141414;
+      --ink-soft: #5c5a56;
+      --border: #ece9e3;
+      --muted: #f4f2ee;
+      --orange: #ff7800;
+      --orange-dark: #e26800;
+      --shadow: 0 1px 2px rgba(20, 20, 20, .04), 0 8px 24px -12px rgba(20, 20, 20, .12);
+      --topbar-bg: rgba(250, 249, 247, .85);
+      --pricebar-bg: #171614;
+      --pricebar-ink: #ffffff;
+      --notice-bg: #fff3e6;
+      --notice-border: #ffdcb3;
+      --notice-ink: #8a5300;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--topbar-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s ease, background .2s ease;
+    }
+
+    .topbar.scrolled {
+      border-color: var(--border);
+    }
+
+    .back-btn {
+      position: relative;
+      cursor: pointer !important;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 14px 8px 10px;
+      cursor: default;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar-logo-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+      padding: 0 100px;
+    }
+
+    .topbar-logo {
+      width: 100%;
+      max-width: 100%;
+      height: 36px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .topbar-name {
+      display: none;
+    }
+
+    .theme-toggle {
+      /* Light mode is temporarily disabled — dark mode only for now */
+      display: none;
+    }
+
+    .theme-toggle svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .theme-toggle .sun {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .moon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .sun {
+      display: block;
+    }
+
+    /* ---------- Layout shell ---------- */
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 0 40px;
+    }
+
+    /* ---------- Loading / error ---------- */
+    .state-screen {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--orange);
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .state-screen p {
+      color: var(--ink-soft);
+      font-size: 14px;
+      max-width: 360px;
+    }
+
+    /* ---------- Gallery ---------- */
+    .gallery {
+      padding: 0 16px;
+      margin-top: 4px;
+    }
+
+    .gallery-mobile {
+      position: relative;
+      border-radius: 0;
+      overflow: hidden;
+      height: 340px;
+      background: var(--muted);
+    }
+
+    .gallery-track {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .gallery-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      height: 100%;
+      position: relative;
+    }
+
+    .gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-fade {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .55) 0%, transparent 40%);
+    }
+
+    .gallery-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 5;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .55);
+      transition: .2s;
+    }
+
+    .dot.active {
+      background: var(--orange);
+      width: 16px;
+      border-radius: 4px;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, .85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      z-index: 5;
+    }
+
+    .gallery-nav.prev {
+      left: 10px;
+    }
+
+    .gallery-nav.next {
+      right: 10px;
+    }
+
+    .badge-founder {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0, 0, 0, .55);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Desktop grid gallery */
+    .gallery-desktop {
+      display: none;
+    }
+
+    /* ---------- Price bar ---------- */
+    .pricebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      margin: 12px 16px 0;
+      background: var(--pricebar-bg);
+      color: var(--pricebar-ink);
+      border-radius: 14px;
+    }
+
+    .price-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .price-tag svg {
+      stroke: var(--pricebar-ink);
+    }
+
+    .stars {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .stars svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .no-stations-txt {
+      font-size: 13px;
+      opacity: .75;
+    }
+
+    /* ---------- Content ---------- */
+    .content {
+      padding: 24px 16px 0;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .biz-title {
+      font-size: 26px;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: -.01em;
+    }
+
+    .biz-desc {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin-top: 12px;
+    }
+
+    .clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .read-more {
+      display: block;
+      margin: 6px auto 0;
+      background: none;
+      border: none;
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card+.card {
+      margin-top: 14px;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+
+    .card-head h2 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .icon {
+      width: 19px;
+      height: 19px;
+      color: var(--ink-soft);
+      flex-shrink: 0;
+    }
+
+    .info-actions {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .info-actions a,
+    .info-actions button {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13.5px;
+      font-weight: 600;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 6px 4px;
+    }
+
+    .info-actions .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+    }
+
+    .hours-row+.hours-row {
+      border-top: 1px dashed var(--border);
+    }
+
+    .hours-day {
+      font-weight: 600;
+    }
+
+    .hours-val {
+      color: var(--ink-soft);
+    }
+
+    .hours-val.closed {
+      color: #c24747;
+    }
+
+    .amenities-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .amenity {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--muted);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .amenity img {
+      width: 17px;
+      height: 17px;
+      object-fit: contain;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin: 26px 0 12px;
+    }
+
+    /* Stations */
+    .station {
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+      cursor: default;
+      margin-bottom: 12px;
+    }
+
+    .station-img {
+      width: 104px;
+      height: 104px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--muted);
+    }
+
+    .station-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .station-img .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .station-info {
+      flex: 1;
+      padding: 2px 0 2px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+
+    .station-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .station-desc {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin-top: 2px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .station-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 6px;
+    }
+
+    .station-cost {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--orange-dark);
+    }
+
+    .station-cta {
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--orange);
+      color: #fff;
+      padding: 5px 9px;
+      border-radius: 7px;
+      border: none;
+      cursor: default;
+    }
+
+    .station-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .no-stations {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      text-align: center;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    /* ---------- Footer — always at the very bottom, styled after chairyapp.com ---------- */
+    .site-footer {
+      width: 100%;
+      margin-top: 36px;
+      padding: 44px 16px 28px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-tagline {
+      margin: 16px 0 0;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      max-width: 360px;
+    }
+
+    .footer-badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .footer-badges a {
+      display: flex;
+      align-items: center;
+      line-height: 0;
+    }
+
+    .footer-badges img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0 20px;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+    }
+
+    .footer-legal a {
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+
+    .footer-legal a:hover {
+      color: var(--orange);
+      text-decoration: underline;
+    }
+
+    .footer-legal .sep {
+      color: var(--ink-soft);
+      opacity: .5;
+    }
+
+    .footer-copyright {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    @media (min-width: 560px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .layout {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* ---------- Booking card (Book now) — base styles, works on all sizes ---------- */
+    .rail {
+      margin-top: 28px;
+      padding: 0 16px 8px;
+    }
+
+    .rail-inner {
+      width: 100%;
+    }
+
+    .rail-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .rail-price {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .rail-price span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+
+    .rail-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      flex-wrap: wrap;
+    }
+
+    .rail-cta {
+      width: 100%;
+      margin-top: 16px;
+      height: 48px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .rail-hint {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .rail-stations {
+      margin-top: 18px;
+    }
+
+    .rail-station-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    /* ---------- Desktop ---------- */
+    @media (min-width: 900px) {
+      .topbar {
+        padding: 16px 32px;
+      }
+
+      .gallery {
+        padding: 20px 32px 0;
+      }
+
+      .gallery-mobile {
+        display: none;
+      }
+
+      .gallery-desktop {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 10px;
+        height: 480px;
+      }
+
+      .gd-main {
+        position: relative;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: zoom-in;
+      }
+
+      .gd-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        display: block;
+      }
+
+      .gd-main-fade {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(to top, rgba(0, 0, 0, .45) 0%, transparent 22%);
+      }
+
+      .gd-counter {
+        position: absolute;
+        bottom: 14px;
+        left: 14px;
+        background: rgba(0, 0, 0, .55);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 999px;
+      }
+
+      .see-all-btn {
+        position: absolute;
+        bottom: 14px;
+        right: 14px;
+        background: #fff;
+        border: 1px solid var(--border);
+        padding: 8px 14px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+
+      .gd-thumbs {
+        height: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-right: 4px;
+        scrollbar-width: thin;
+      }
+
+      .gd-thumbs::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .gd-thumbs::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      .gd-thumb {
+        position: relative;
+        flex-shrink: 0;
+        height: 112px;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        background: var(--muted);
+        transition: border-color .15s ease, opacity .15s ease;
+      }
+
+      .gd-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        display: block;
+        opacity: .72;
+        transition: opacity .15s ease;
+      }
+
+      .gd-thumb:hover img {
+        opacity: 1;
+      }
+
+      .gd-thumb.active {
+        border-color: var(--orange);
+      }
+
+      .gd-thumb.active img {
+        opacity: 1;
+      }
+
+      .pricebar {
+        margin: 16px 32px 0;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 36px;
+        padding: 28px 32px 60px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .content {
+        padding: 0;
+        max-width: none;
+        margin: 0;
+      }
+
+      .biz-title {
+        text-align: left;
+        font-size: 30px;
+      }
+
+      .biz-desc {
+        text-align: left;
+      }
+
+      .read-more {
+        text-align: left;
+        width: auto;
+        margin: 6px 0 0;
+      }
+
+      .info-actions {
+        justify-content: flex-start;
+      }
+
+      .rail {
+        position: relative;
+        margin-top: 0;
+        padding: 0;
+      }
+
+      .rail-inner {
+        position: sticky;
+        top: 92px;
+      }
+
+      .rail-price {
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .station {
+        margin-bottom: 12px;
+      }
+    }
+
+    /* ---------- Fullscreen viewer ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 92%;
+      max-height: 86%;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-count {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, .15);
+      color: #fff;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-nav.prev {
+      left: 18px;
+    }
+
+    .lightbox-nav.next {
+      right: 18px;
+    }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%) translateY(16px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: calc(100% - 32px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 12px 18px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .toast svg {
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-width: 900px) {
+      .toast {
+        bottom: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar" id="topbar">
+    <button class="back-btn" onclick="window.location.href = '/'">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" style="width:16px;height:16px;">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Back
+    </button>
+    <div class="topbar-logo-wrap">
+      <img class="topbar-logo" src="https://chairyapp-bucket.s3.amazonaws.com/1779843123622.png" alt="Chairy logo">
+    </div>
+    <span class="topbar-name" id="topbarName"></span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="loadingScreen" class="state-screen">
+    <div class="spinner"></div>
+    <p>Loading shop details…</p>
+  </div>
+
+  <div id="errorScreen" class="state-screen" style="display:none;">
+    <p id="errorText">We couldn't load this shop right now. Please try again later.</p>
+  </div>
+
+  <div id="app" style="display:none;">
+
+    <div class="gallery">
+      <!-- Mobile carousel -->
+      <div class="gallery-mobile">
+        <div class="gallery-track" id="galleryTrack"></div>
+        <div class="gallery-fade"></div>
+        <button class="gallery-nav prev" onclick="slidePrev()">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#141414" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="gallery-nav next" onclick="slideNext()">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#141414" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        <div class="gallery-dots" id="galleryDots"></div>
+        <div class="badge-founder" id="founderBadge" style="display:none;">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="#ff7800" stroke="#fff" stroke-width="1">
+            <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5z" />
+          </svg>
+          Founding shop
+        </div>
+      </div>
+
+      <!-- Desktop grid gallery -->
+      <div class="gallery-desktop" id="galleryDesktop"></div>
+    </div>
+
+    <div class="pricebar" id="pricebar">
+      <div class="price-tag" id="priceTag"></div>
+      <div class="stars" id="starsRow"></div>
+    </div>
+
+    <div class="layout">
+      <div class="content">
+
+        <h1 class="biz-title" id="bizName"></h1>
+        <p class="biz-desc clamp-3" id="bizDesc"></p>
+        <button class="read-more" id="readMoreBtn" style="display:none;" onclick="toggleDescription()">Read
+          more</button>
+
+        <div class="card" style="margin-top:22px;">
+          <div class="card-head">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <h2>Information</h2>
+          </div>
+          <div class="info-actions">
+            <a id="mapLink" href="#" target="_blank" rel="noopener" style="display:none;">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Open map
+            </a>
+          </div>
+        </div>
+
+        <h2 class="section-title">Opening Hours</h2>
+        <div class="card">
+          <div id="hoursList"></div>
+        </div>
+
+        <div id="amenitiesBlock" style="display:none;">
+          <h2 class="section-title">Amenities</h2>
+          <div class="card">
+            <div class="amenities-wrap" id="amenitiesList"></div>
+          </div>
+        </div>
+
+        <h2 class="section-title" id="stationsTitle">Available Stations</h2>
+        <div id="stationsList"></div>
+
+      </div>
+
+      <!-- Desktop sticky rail / mobile: renders below Available Stations -->
+      <div class="rail" id="rail" style="display:none;">
+        <div class="rail-inner">
+          <div class="rail-card">
+            <div class="rail-price" id="railPrice"></div>
+            <div class="rail-rating" id="railRating"></div>
+            <button class="rail-cta" onclick="handleBookNow()">Book now</button>
+            <p class="rail-hint">Informational preview — booking unavailable</p>
+            <div class="rail-stations" id="railStations"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer — always the very last section on the page -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <img class="footer-logo" src="https://chairyapp-bucket.s3.amazonaws.com/1779843123622.png" alt="Chairy App">
+
+        <p class="footer-tagline">Chairy makes barbershop and salon owners more money by filling in their
+          unoccupied chairs with stylists.</p>
+
+        <div class="footer-badges" id="footerBadges">
+          <a href="https://apps.apple.com/us/app/chairy/id6761076049" target="_blank" rel="noopener">
+            <img
+              src="https://cdn.sanity.io/images/ez8qjsla/production/0e92934930b948baf4a4f8cf7afd40343539871b-120x40.svg?fit=max&auto=format"
+              alt="Download on the App Store">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.chairyapp" target="_blank" rel="noopener">
+            <img
+              src="https://cdn.sanity.io/images/ez8qjsla/production/b7710ef006d9bffe7346f20190d5e7c12e9285bd-564x168.png?fit=max&auto=format"
+              alt="Get it on Google Play">
+          </a>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+          <div class="footer-legal">
+            <a href="https://www.chairyapp.com/legal/privacy-policy" target="_blank" rel="noopener">Privacy
+              Policy</a>
+            <span class="sep">·</span>
+            <a href="https://www.chairyapp.com/legal/terms-and-conditions" target="_blank" rel="noopener">Terms
+              and Conditions</a>
+          </div>
+          <div class="footer-copyright">© Copyright 2026 · Chairy App</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+    </svg>
+    <span id="toastText"></span>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-count" id="lightboxCount"></div>
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <button class="lightbox-nav prev" onclick="lightboxPrev()">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" onclick="lightboxNext()">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    /* =========================================================
+       CONFIG — update these two values for your environment
+    ========================================================= */
+    const API_URL = "https://chairy-backend-74207e637f70.herokuapp.com/api/v1"; // e.g. "https://api.myapp.com"
+    const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5OTk5OTk5OTk5OTkiLCJpYXQiOjE3MTMwMjYyOTF9.4fEO-MHLjuBIjkpCI4sI7VDoJEaY6IVQcqBtZM9BjiY"; // Authorization header value
+
+    /* =========================================================
+       Get businessId from URL:  .../shop/<businessId>
+    ========================================================= */
+    function getBusinessIdFromUrl() {
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const idx = parts.indexOf("shop");
+      if (idx !== -1 && parts[idx + 1]) return decodeURIComponent(parts[idx + 1]);
+      return parts[parts.length - 1] || "";
+    }
+
+    /* =========================================================
+       GET BUSINESS (adapted from getBusinessService reference)
+    ========================================================= */
+    function getBusinessService(_id) {
+      return new Promise((resolve, reject) => {
+        fetch(API_URL + "/shop/" + _id, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: API_TOKEN,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.json().then((err) => { throw err; });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.type === "error") {
+              resolve({ message: data.message });
+            }
+            resolve(data);
+          })
+          .catch((error) => reject(error));
+      });
+    }
+
+    /* =========================================================
+       State
+    ========================================================= */
+    let images = [];
+    let currentSlide = 0;
+    let lightboxIndex = 0;
+    let gdIndex = 0;
+    let stationsCount = 0;
+
+    const DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    function formatTime(time) {
+      if (!time) return "";
+      const [h, m] = time.split(":");
+      const hour = parseInt(h, 10);
+      const ampm = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour % 12 || 12;
+      return `${hour12}:${m} ${ampm}`;
+    }
+
+    function escapeHtml(str) {
+      if (str === undefined || str === null) return "";
+      return String(str)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function starsSvg(filled, size) {
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${filled ? '#ff7800' : 'none'}" stroke="#ff7800" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+    }
+
+    function renderRating(container, value, size) {
+      if (!value || value <= 0) { container.innerHTML = ""; return; }
+      let html = "";
+      for (let i = 1; i <= 5; i++) {
+        html += starsSvg(i <= Math.round(value), size || 16);
+      }
+      container.innerHTML = html;
+    }
+
+    /* =========================================================
+       Render
+    ========================================================= */
+    function renderGallery(mainImg, extraImgs, name) {
+      images = [mainImg, ...(extraImgs || [])].filter(Boolean);
+      const track = document.getElementById("galleryTrack");
+      const dots = document.getElementById("galleryDots");
+      const desktop = document.getElementById("galleryDesktop");
+
+      if (images.length === 0) {
+        track.innerHTML = `<div class="gallery-slide" style="display:flex;align-items:center;justify-content:center;background:var(--muted);"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a9a49c" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+        desktop.innerHTML = `<div class="empty" style="grid-column:1/-1; background:var(--muted); border-radius:16px; display:flex; align-items:center; justify-content:center; height:100%;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a9a49c" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+        return;
+      }
+
+      track.innerHTML = images.map((img, i) =>
+        `<div class="gallery-slide"><img src="${img}" alt="${escapeHtml(name)} ${i + 1}" onclick="openLightbox(${i})"></div>`
+      ).join("");
+
+      dots.innerHTML = images.length > 1 ? images.map((_, i) =>
+        `<span class="dot ${i === 0 ? 'active' : ''}" data-i="${i}"></span>`
+      ).join("") : "";
+
+      track.addEventListener("scroll", () => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        currentSlide = i;
+        document.querySelectorAll(".dot").forEach((d, di) => d.classList.toggle("active", di === i));
+      });
+
+      // Desktop: big main image on the left, scrollable thumbnail column on the right.
+      // Selecting a thumbnail swaps the main image; clicking the main image opens the fullscreen lightbox.
+      gdIndex = 0;
+
+      const thumbsHtml = images.map((img, i) => `
+        <div class="gd-thumb ${i === 0 ? 'active' : ''}" data-i="${i}" onclick="selectDesktopImage(${i})">
+          <img src="${img}" alt="${escapeHtml(name)} thumbnail ${i + 1}">
+        </div>
+      `).join("");
+
+      desktop.innerHTML = `
+      <div class="gd-main" id="gdMain" onclick="openLightbox(gdIndex)">
+        <img id="gdMainImg" src="${images[0]}" alt="${escapeHtml(name)}">
+        <div class="gd-main-fade"></div>
+        ${images.length > 1 ? `<span class="gd-counter" id="gdCounter">1 / ${images.length}</span>` : ""}
+      </div>
+      <div class="gd-thumbs" id="gdThumbs">${thumbsHtml}</div>
+    `;
+    }
+
+    function selectDesktopImage(i) {
+      gdIndex = i;
+      const mainImg = document.getElementById("gdMainImg");
+      const counter = document.getElementById("gdCounter");
+      if (mainImg) mainImg.src = images[i];
+      if (counter) counter.textContent = `${i + 1} / ${images.length}`;
+      document.querySelectorAll(".gd-thumb").forEach((t, ti) => t.classList.toggle("active", ti === i));
+    }
+
+    function slidePrev() {
+      const track = document.getElementById("galleryTrack");
+      track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+    }
+    function slideNext() {
+      const track = document.getElementById("galleryTrack");
+      track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+    }
+
+    function toggleDescription() {
+      const el = document.getElementById("bizDesc");
+      const btn = document.getElementById("readMoreBtn");
+      const expanded = el.classList.toggle("clamp-3") === false;
+      btn.textContent = expanded ? "Read less" : "Read more";
+    }
+
+    function renderHours(openingHours) {
+      const el = document.getElementById("hoursList");
+      if (!openingHours) { el.innerHTML = `<p style="color:var(--ink-soft);font-size:13px;">No hours available</p>`; return; }
+      el.innerHTML = DAY_ORDER.map((day) => {
+        const d = openingHours[day] || { isClosed: true };
+        const val = d.isClosed ? "Closed" : `${formatTime(d.open)} - ${formatTime(d.close)}`;
+        return `<div class="hours-row"><span class="hours-day">${day}</span><span class="hours-val ${d.isClosed ? 'closed' : ''}">${val}</span></div>`;
+      }).join("");
+    }
+
+    function renderAmenities(amenities) {
+      const block = document.getElementById("amenitiesBlock");
+      const list = document.getElementById("amenitiesList");
+      if (!amenities || amenities.length === 0) { block.style.display = "none"; return; }
+      block.style.display = "block";
+      list.innerHTML = amenities.map((a) => `
+      <div class="amenity">
+        ${a.icon ? `<img src="${a.icon}" alt="">` : ""}
+        <span>${escapeHtml(a.title)}</span>
+      </div>
+    `).join("");
+    }
+
+    function renderStations(stations, name) {
+      const active = (stations || []).filter((s) => s.active);
+      stationsCount = active.length;
+      const list = document.getElementById("stationsList");
+      const railList = document.getElementById("railStations");
+
+      if (active.length === 0) {
+        list.innerHTML = `<div class="no-stations">No stations available</div>`;
+        railList.innerHTML = "";
+        return;
+      }
+
+      list.innerHTML = active.map((s) => `
+      <div class="station-card">
+        <div class="station">
+          <div class="station-img">
+            ${s.imgs && s.imgs.length ? `<img src="${s.imgs[0]}" alt="${escapeHtml(s.name)}">` :
+          `<div class="placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a9a49c" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
+          </div>
+          <div class="station-info">
+            <div>
+              <div class="station-name">${escapeHtml(s.name)}</div>
+              <div class="station-desc">${escapeHtml(s.description || "No description")}</div>
+            </div>
+            <div class="station-bottom">
+              <span class="station-cost">$${s.cost}/day</span>
+              <button class="station-cta" onclick="return false;">Rent it!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+      railList.innerHTML = active.map((s) => `
+      <div class="rail-station-row"><span>${escapeHtml(s.name)}</span><span>$${s.cost}/day</span></div>
+    `).join("");
+    }
+
+    function renderPriceBar(stations, ratingValue) {
+      const active = (stations || []).filter((s) => s.active);
+      const priceTag = document.getElementById("priceTag");
+      const railPrice = document.getElementById("railPrice");
+      const railRating = document.getElementById("railRating");
+
+      let priceHtml = "";
+      let railPriceHtml = "";
+      if (active.length > 0) {
+        const costs = active.map((s) => s.cost);
+        const min = Math.min(...costs), max = Math.max(...costs);
+        const rangeText = min === max ? `$${min}/day` : `$${min} - $${max}/day`;
+        priceHtml = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>${rangeText}</span>`;
+        railPriceHtml = `${rangeText} <span>starting price</span>`;
+      } else {
+        priceHtml = `<span class="no-stations-txt">No stations available</span>`;
+        railPriceHtml = `<span style="font-size:14px;color:var(--ink-soft);">No stations available</span>`;
+      }
+      priceTag.innerHTML = priceHtml;
+      railPrice.innerHTML = railPriceHtml;
+
+      renderRating(document.getElementById("starsRow"), ratingValue, 15);
+      if (ratingValue && ratingValue > 0) {
+        renderRating(railRating, ratingValue, 14);
+        railRating.innerHTML += `<span>${Number(ratingValue).toFixed(1)}</span>`;
+      }
+    }
+
+    /* =========================================================
+       Lightbox
+    ========================================================= */
+    function openLightbox(i) {
+      if (!images.length) return;
+      lightboxIndex = i;
+      updateLightbox();
+      document.getElementById("lightbox").classList.add("open");
+    }
+    function closeLightbox() {
+      document.getElementById("lightbox").classList.remove("open");
+      if (document.getElementById("gdThumbs")) selectDesktopImage(lightboxIndex);
+    }
+    function lightboxPrev() {
+      lightboxIndex = (lightboxIndex - 1 + images.length) % images.length;
+      updateLightbox();
+    }
+    function lightboxNext() {
+      lightboxIndex = (lightboxIndex + 1) % images.length;
+      updateLightbox();
+    }
+    function updateLightbox() {
+      document.getElementById("lightboxImg").src = images[lightboxIndex];
+      document.getElementById("lightboxCount").textContent = `${lightboxIndex + 1} / ${images.length}`;
+    }
+
+    /* =========================================================
+       Toast
+    ========================================================= */
+    let toastTimer = null;
+    function showToast(message, duration) {
+      const toast = document.getElementById("toast");
+      const text = document.getElementById("toastText");
+      text.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, duration || 3200);
+    }
+
+    /* =========================================================
+       Book now — booking isn't available here, so point people
+       to the app instead
+    ========================================================= */
+    function handleBookNow() {
+      const target = document.getElementById("footerBadges");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      showToast("Booking happens in the app — please download Chairy below to reserve this chair.");
+    }
+
+    /* =========================================================
+       Theme — dark mode only for now (light mode toggle is
+       hidden and disabled until it's re-enabled later)
+    ========================================================= */
+    function applyTheme(theme) {
+      if (theme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+    }
+    function toggleTheme() {
+      // Disabled for now — dark mode only.
+    }
+    (function initTheme() {
+      applyTheme("dark");
+    })();
+
+    /* =========================================================
+       Init
+    ========================================================= */
+    window.addEventListener("scroll", () => {
+      document.getElementById("topbar").classList.toggle("scrolled", window.scrollY > 40);
+    });
+
+    async function init() {
+      const businessId = getBusinessIdFromUrl();
+      const loadingScreen = document.getElementById("loadingScreen");
+      const errorScreen = document.getElementById("errorScreen");
+      const app = document.getElementById("app");
+
+      if (!businessId) {
+        loadingScreen.style.display = "none";
+        document.getElementById("errorText").textContent = "No shop was specified in the URL.";
+        errorScreen.style.display = "flex";
+        return;
+      }
+
+      try {
+        const result = await getBusinessService(businessId);
+
+        if (!result || result.success === false) {
+          throw new Error((result && result.message) || "Shop not found");
+        }
+
+        loadingScreen.style.display = "none";
+        app.style.display = "block";
+
+        document.getElementById("bizName").textContent = result.name || "Unnamed shop";
+        document.getElementById("topbarName").textContent = result.name || "";
+
+        const desc = result.description || "";
+        const descEl = document.getElementById("bizDesc");
+        descEl.textContent = desc;
+        if (desc.length > 150) {
+          document.getElementById("readMoreBtn").style.display = "block";
+        }
+
+        renderGallery(result.img, result.imgs, result.name);
+        document.getElementById("founderBadge").style.display = result.founder ? "flex" : "none";
+
+        renderPriceBar(result.stations, result.ratingValue);
+        renderHours(result.openingHours);
+        renderAmenities(result.amenities);
+        renderStations(result.stations, result.name);
+
+        if (result.lat && result.lng) {
+          const mapLink = document.getElementById("mapLink");
+          mapLink.href = `https://www.google.com/maps/search/?api=1&query=${result.lat},${result.lng}`;
+          mapLink.style.display = "flex";
+        }
+
+        const activeCount = (result.stations || []).filter((s) => s.active).length;
+        if (activeCount > 0) {
+          document.getElementById("rail").style.display = "block";
+        }
+
+      } catch (err) {
+        loadingScreen.style.display = "none";
+        document.getElementById("errorText").textContent =
+          (err && err.message) ? err.message : "We couldn't load this shop right now. Please try again later.";
+        errorScreen.style.display = "flex";
+      }
+    }
+
+    init();
+  </script>
+</body>

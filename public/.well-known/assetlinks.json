@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.chairyapp",
+      "sha256_cert_fingerprints": [
+        "1F:B8:53:9D:7D:FF:DC:89:63:8A:73:1D:63:80:DD:3D:0D:31:E4:8B:71:34:17:0A:57:6C:21:C5:EC:87:1B:9A"
+      ]
+    }
+  }
+]

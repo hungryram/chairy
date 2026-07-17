@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["Q7377H75M3.com.chairyapp"],
+        "components": [
+          {
+            "/": "/shops/*",
+            "comment": "Matches any URL path starting with /shops/"
+          }
+        ]
+      }
+    ]
+  }
+}

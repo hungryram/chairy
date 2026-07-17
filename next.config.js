@@ -8,6 +8,10 @@ module.exports = {
                 destination: '/reset-password.html',
             },
             {
+                source: '/shop/:id',
+                destination: '/shop.html',
+            },
+            {
                 source: '/stripe-account-linked',
                 destination: '/Stripe_Account_Linked.html',
             },
