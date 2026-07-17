@@ -41,7 +41,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
   const appProofImages = [
     'https://cdn.sanity.io/images/ez8qjsla/production/6ca2df017c9bcb7cb085e152a856b7ab3af4ecd6-4992x4920.webp?auto=format&w=1200&q=72',
     'https://cdn.sanity.io/images/ez8qjsla/production/8901bc29b5e31fa9dce31585b80d3f715a96f25f-4992x4920.webp?auto=format&w=1200&q=72',
-    'https://cdn.sanity.io/images/ez8qjsla/production/f522357012888f5941af4e331ef0deef8d0f19d6-4992x4920.webp?auto=format&w=1200&q=72',
+    'https://cdn.sanity.io/images/ez8qjsla/production/c702ea234c5a3212472dfbf0718fe3698b1480ce-2664x4412.png',
     'https://cdn.sanity.io/images/ez8qjsla/production/ca284cf0ef93d709b2992a988e41475900566be7-4992x4920.webp?auto=format&w=1200&q=72',
   ];
 
@@ -78,7 +78,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-[#fdaf6b]">Welcome to Chairy</p>
           <h1 className="text-5xl font-semibold leading-[0.95] tracking-tight md:text-6xl">
-            Stop Letting Empty Chairs Cost You Money
+            THE BARBERSHOP & SALON CHAIR RENTAL APP 
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-[#c7cad1]">
 Chairy helps Barbershops and Salons turn unused chairs into income by connecting you with Barbers and Hairstylists looking for space, on demand.
