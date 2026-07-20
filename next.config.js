@@ -8,7 +8,7 @@ module.exports = {
                 destination: '/reset-password.html',
             },
             {
-                source: '/shop/:id',
+                source: '/shops/:id',
                 destination: '/shop.html',
             },
             {
