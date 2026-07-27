@@ -1357,6 +1357,39 @@
       });
     }
 
+
+    /* =========================================================
+   VIEW BUSINESS
+========================================================= */
+    function viewBusinessService(_id, type) {
+      return new Promise((resolve, reject) => {
+        fetch(API_URL + "/shopView", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: API_TOKEN,
+          },
+          body: JSON.stringify({
+            _id: _id,
+            type: type,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.json().then((err) => { throw err; });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.type === "error") {
+              resolve({ message: data.message });
+            }
+            resolve(data);
+          })
+          .catch((error) => reject(error));
+      });
+    }
+
     /* =========================================================
        State
     ========================================================= */
@@ -1601,10 +1634,39 @@
     }
 
     /* =========================================================
-       Book now — booking isn't available here, so point people
-       to the app instead
+       Book now — booking isn't available here, so send people
+       straight to the right app store based on their device;
+       everyone else falls back to scrolling to the app section
     ========================================================= */
+    const APP_STORE_URL = "https://apps.apple.com/us/app/chairy/id6761076049";
+    const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.chairyapp";
+
+    function getDevicePlatform() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera || "";
+
+      // iPadOS 13+ reports as "MacIntel" in the UA string, so it needs a touch-points check too.
+      const isIOS = (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if (isIOS) return "ios";
+
+      if (/android/i.test(ua)) return "android";
+
+      return "other";
+    }
+
     function handleBookNow() {
+      const platform = getDevicePlatform();
+
+      if (platform === "ios") {
+        window.location.href = APP_STORE_URL;
+        return;
+      }
+
+      if (platform === "android") {
+        window.location.href = PLAY_STORE_URL;
+        return;
+      }
+
       const target = document.getElementById("footerBadges");
       if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
       showToast("Booking happens in the app — please download Chairy below to reserve this chair.");
@@ -1636,6 +1698,7 @@
     });
 
     async function init() {
+
       const businessId = getBusinessIdFromUrl();
       const loadingScreen = document.getElementById("loadingScreen");
       const errorScreen = document.getElementById("errorScreen");
@@ -1650,6 +1713,9 @@
 
       try {
         const result = await getBusinessService(businessId);
+
+        viewBusinessService(businessId, "WEB");
+        viewBusinessService(businessId, "QR");
 
         if (!result || result.success === false) {
           throw new Error((result && result.message) || "Shop not found");
@@ -1698,3 +1764,5 @@
     init();
   </script>
 </body>
+
+</html>
