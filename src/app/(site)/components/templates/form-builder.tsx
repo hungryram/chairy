@@ -111,6 +111,13 @@ const optionId = (value: unknown, index: number): string => {
     .replace(/[^A-Za-z0-9_\-:.]/g, '')}${index}`;
 };
 
+const PHONE_PATTERN = '^(?:\\d{10}|\\d{3}-\\d{3}-\\d{4}|\\(\\d{3}\\)-\\d{3}-\\d{4})$';
+
+const normalizePhoneInput = (event: React.FormEvent<HTMLInputElement>) => {
+  const input = event.currentTarget;
+  input.value = input.value.replace(/[^0-9()\-]/g, '');
+};
+
 function SubmitButton({
   label,
   backgroundColor,
@@ -219,6 +226,11 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                       name={field.label}
                       className={Styles.formDefaultInput}
                       id={fieldId(field?.label, i)}
+                      inputMode="numeric"
+                      placeholder="111-111-1111"
+                      pattern={PHONE_PATTERN}
+                      title="Enter phone as 111-111-1111, (111)-111-1111, or 1112223333"
+                      onInput={normalizePhoneInput}
                       required={field.required ? true : undefined}
                     />
                   )}
