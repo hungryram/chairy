@@ -12,6 +12,10 @@ module.exports = {
                 destination: '/shop.html',
             },
             {
+                source: '/emails/:email',
+                destination: '/unsubscribe.html',
+            },
+            {
                 source: '/stripe-account-linked',
                 destination: '/Stripe_Account_Linked.html',
             },

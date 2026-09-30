@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribe · Chairy</title>
+  <link rel="icon" type="image/png" href="https://chairyapp-bucket.s3.us-east-2.amazonaws.com/1782797729296.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.1/sweetalert2.all.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --card: #19191c;
+      --ink: #f5f4f2;
+      --ink-soft: #a6a39c;
+      --border: #2a2a2e;
+      --muted: #232326;
+      --orange: #ff8a1f;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    h1,
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 30px 30px;
+      text-align: center;
+    }
+
+    .logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      margin: 0 auto 22px;
+      display: block;
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-wrap svg {
+      width: 26px;
+      height: 26px;
+      color: var(--ink-soft);
+    }
+
+    h1 {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+
+    .email-pill {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--muted);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      word-break: break-all;
+    }
+
+    .desc {
+      margin: 16px 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+
+    .btn-unsub {
+      width: 100%;
+      margin-top: 26px;
+      height: 50px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff;
+      font-size: 15.5px;
+      font-weight: 700;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .btn-unsub:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-unsub:disabled {
+      opacity: .7;
+      cursor: default;
+    }
+
+    .spinner {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, .4);
+      border-top-color: #fff;
+      animation: spin .8s linear infinite;
+      display: none;
+    }
+
+    .btn-unsub.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .fine-print {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      opacity: .8;
+    }
+
+    .error-box {
+      display: none;
+      margin-top: 14px;
+      background: #241012;
+      border: 1px solid #4a1c1f;
+      color: #ff9a9a;
+      font-size: 13px;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <img class="logo" src="https://chairyapp-bucket.s3.amazonaws.com/1779843123622.png" alt="Chairy">
+
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M4 4h16v16H4z" opacity="0"></path>
+        <path d="M22 6l-10 7L2 6"></path>
+        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+      </svg>
+    </div>
+
+    <h1>Unsubscribe from Chairy emails</h1>
+    <div class="email-pill" id="emailPill">—</div>
+
+    <p class="desc" id="descText">
+      You'll be unsubscribed from all marketing and newsletter emails from Chairy. You may still receive
+      important account or transactional emails related to your bookings.
+    </p>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <button class="btn-unsub" id="unsubBtn" onclick="handleUnsubscribe()">
+      <span class="spinner"></span>
+      <span class="btn-label">Unsubscribe from all emails</span>
+    </button>
+
+    <p class="fine-print">Changed your mind? You can always resubscribe from within the Chairy app.</p>
+  </div>
+
+  <script>
+    const API_URL = "https://chairy-backend-74207e637f70.herokuapp.com/api/v1";
+
+    function getEmailFromUrl() {
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const idx = parts.indexOf("emails");
+      const raw = (idx !== -1 && parts[idx + 1]) ? parts[idx + 1] : parts[parts.length - 1];
+      if (!raw) return "";
+      try {
+        return decodeURIComponent(raw);
+      } catch (e) {
+        return raw;
+      }
+    }
+
+    const userEmail = getEmailFromUrl();
+
+    function init() {
+      const pill = document.getElementById("emailPill");
+      const btn = document.getElementById("unsubBtn");
+      const errorBox = document.getElementById("errorBox");
+
+      if (!userEmail || userEmail.indexOf("@") === -1) {
+        pill.textContent = "No email found";
+        btn.disabled = true;
+        errorBox.style.display = "block";
+        errorBox.textContent = "We couldn't find a valid email address in this link. Please use the unsubscribe link from one of our emails.";
+        return;
+      }
+
+      pill.textContent = userEmail;
+    }
+
+    function setLoading(isLoading) {
+      const btn = document.getElementById("unsubBtn");
+      const label = btn.querySelector(".btn-label");
+      btn.disabled = isLoading;
+      btn.classList.toggle("loading", isLoading);
+      label.textContent = isLoading ? "Unsubscribing…" : "Unsubscribe from all emails";
+    }
+
+    function showError(message) {
+      const errorBox = document.getElementById("errorBox");
+      errorBox.style.display = "block";
+      errorBox.textContent = message;
+    }
+
+    async function handleUnsubscribe() {
+      const errorBox = document.getElementById("errorBox");
+      errorBox.style.display = "none";
+      setLoading(true);
+
+      try {
+        const response = await fetch(API_URL + "/unsubscribe/" + encodeURIComponent(userEmail), {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+
+        if (data && data.success) {
+          setLoading(false);
+          document.getElementById("unsubBtn").disabled = true;
+
+          Swal.fire({
+            icon: "success",
+            title: "You're unsubscribed!",
+            text: "You will no longer receive marketing or newsletter emails from Chairy.",
+            confirmButtonText: "Done",
+            confirmButtonColor: "#22c55e",
+            background: "#19191c",
+            color: "#f5f4f2",
+          });
+        } else {
+          throw new Error("Unsubscribe was not successful");
+        }
+      } catch (err) {
+        setLoading(false);
+        showError("Something went wrong and we couldn't unsubscribe you. Please try again in a moment.");
+      }
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
