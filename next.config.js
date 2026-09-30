@@ -16,6 +16,10 @@ module.exports = {
                 destination: '/unsubscribe.html',
             },
             {
+                source: '/unsubscribe',
+                destination: '/unsubscribe.html',
+            },
+            {
                 source: '/stripe-account-linked',
                 destination: '/Stripe_Account_Linked.html',
             },
