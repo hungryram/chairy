@@ -41,7 +41,7 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
   const appProofImages = [
     'https://cdn.sanity.io/images/ez8qjsla/production/6ca2df017c9bcb7cb085e152a856b7ab3af4ecd6-4992x4920.webp?auto=format&w=1200&q=72',
     'https://cdn.sanity.io/images/ez8qjsla/production/8901bc29b5e31fa9dce31585b80d3f715a96f25f-4992x4920.webp?auto=format&w=1200&q=72',
-    'https://cdn.sanity.io/images/ez8qjsla/production/c702ea234c5a3212472dfbf0718fe3698b1480ce-2664x4412.png',
+    'https://cdn.sanity.io/images/ez8qjsla/production/f522357012888f5941af4e331ef0deef8d0f19d6-4992x4920.webp?auto=format&w=1200&q=72',
     'https://cdn.sanity.io/images/ez8qjsla/production/ca284cf0ef93d709b2992a988e41475900566be7-4992x4920.webp?auto=format&w=1200&q=72',
   ];
 
@@ -78,10 +78,11 @@ export default function HomeDesignLanding({ pageBuilder = [], contactEmail }: Ho
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-[#fdaf6b]">Welcome to Chairy</p>
           <h1 className="text-5xl font-semibold leading-[0.95] tracking-tight md:text-6xl">
-            THE BARBERSHOP & SALON CHAIR RENTAL APP 
+            Stop Letting Empty Chairs Cost You Money
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-[#c7cad1]">
-Chairy helps Barbershops and Salons turn unused chairs into income by connecting you with Barbers and Hairstylists looking for space, on demand.
+            Chairy helps barbershops and salons turn unused chairs into income by connecting you with barbers and stylists
+            looking for space, on demand.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -234,9 +235,9 @@ Chairy helps Barbershops and Salons turn unused chairs into income by connecting
 
       <section id="join-early" className="mx-auto container px-4 py-6 lg:px-8">
         <div className="content rounded-2xl border border-[#fdaf6b]/[0.03] p-6 md:p-8">
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">For Barbers and Hairstylists</h2>
+          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">For Barbers and Stylists</h2>
           <p className="mt-4 max-w-3xl text-[#c7cad1]">
-            We are onboarding Barbershops and Salons first. Join Early Access to be notified when chairs and cities become available near you.
+            We are onboarding barbershops and salons first. Join early to be notified when chairs become available near you.
           </p>
           <div className="mt-7">
             <a href='/professional-sign-up' className="secondary-button !bg-transparent !text-[#fdaf6b] !border !border-[#fdaf6b]">
@@ -249,7 +250,7 @@ Chairy helps Barbershops and Salons turn unused chairs into income by connecting
       <section className="mx-auto container px-4 py-6 lg:px-8">
         <div className="content grid gap-6 rounded-2xl border border-white/[0.02] p-6 md:grid-cols-2 md:items-center md:p-8" style={{ backgroundImage: 'radial-gradient(800px at 50% 50%, rgba(238,76,44,0.02), transparent 80%)' }}>
           <div>
-            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built by a Barber in the Industry</h2>
+            <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">Built by Someone in the Industry</h2>
             <p className="mt-4 text-[#c7cad1]">
               Chairy was created after seeing the same issue daily, empty chairs in shops, while barbers struggled to
               find places to work. This platform was built to fix that.

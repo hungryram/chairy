@@ -20,6 +20,10 @@ module.exports = {
                 destination: '/unsubscribe.html',
             },
             {
+                source: '/download',
+                destination: '/download.html',
+            },
+            {
                 source: '/stripe-account-linked',
                 destination: '/Stripe_Account_Linked.html',
             },

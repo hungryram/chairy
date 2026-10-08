@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chairy</title>
+
+    <script>
+        (function () {
+
+            const APP_STORE_URL =
+                "https://apps.apple.com/us/app/chairy/id6761076049";
+
+            const PLAY_STORE_URL =
+                "https://play.google.com/store/apps/details?id=com.chairyapp";
+
+            const WEBSITE_URL =
+                "https://www.chairyapp.com/";
+
+            function redirectUser() {
+
+                const userAgent =
+                    navigator.userAgent ||
+                    navigator.vendor ||
+                    window.opera;
+
+                // Detect iOS (iPhone, iPad, iPod)
+                // Includes newer iPads that identify as Mac
+                const isIOS =
+                    /iPad|iPhone|iPod/.test(userAgent) ||
+                    (
+                        navigator.platform === "MacIntel" &&
+                        navigator.maxTouchPoints > 1
+                    );
+
+                // Detect Android
+                const isAndroid =
+                    /android/i.test(userAgent);
+
+                if (isIOS) {
+
+                    // Redirect to Apple App Store
+                    window.location.replace(APP_STORE_URL);
+
+                } else if (isAndroid) {
+
+                    // Redirect to Google Play Store
+                    window.location.replace(PLAY_STORE_URL);
+
+                } else {
+
+                    // Desktop, web or any other device
+                    window.location.replace(WEBSITE_URL);
+                }
+            }
+
+            window.addEventListener("load", redirectUser);
+
+        })();
+    </script>
+</head>
+
+<body>
+    <p>Redirecting to Chairy...</p>
+</body>
+
+</html>
