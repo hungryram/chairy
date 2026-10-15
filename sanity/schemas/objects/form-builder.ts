@@ -161,6 +161,24 @@ export default defineType({
                                 { type: 'string' }
                             ]
                         },
+                        {
+                            title: 'Enable "Other" Option',
+                            name: 'enableOtherOption',
+                            type: 'boolean',
+                            hidden: ({ parent }) => parent?.type !== "select",
+                        },
+                        {
+                            title: 'Other Option Label',
+                            name: 'otherOptionLabel',
+                            type: 'string',
+                            hidden: ({ parent }) => parent?.type !== "select" || !parent?.enableOtherOption,
+                        },
+                        {
+                            title: 'Other Input Placeholder',
+                            name: 'otherPlaceholder',
+                            type: 'string',
+                            hidden: ({ parent }) => parent?.type !== "select" || !parent?.enableOtherOption,
+                        },
                     ],
                 },
             ],

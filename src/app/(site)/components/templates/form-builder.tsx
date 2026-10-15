@@ -17,7 +17,10 @@ interface FormField {
   stacked: boolean;
   inlineEmail: boolean;
   hideLabel: boolean;
-  half: boolean
+  half: boolean;
+  enableOtherOption?: boolean;
+  otherOptionLabel?: string;
+  otherPlaceholder?: string;
 }
 
 interface FormSchema {
@@ -111,6 +114,8 @@ const optionId = (value: unknown, index: number): string => {
     .replace(/[^A-Za-z0-9_\-:.]/g, '')}${index}`;
 };
 
+const OTHER_OPTION_VALUE = '__other__';
+
 const PHONE_PATTERN = '^\\d{3}-\\d{3}-\\d{4}$';
 
 const formatPhoneInput = (event: React.FormEvent<HTMLInputElement>) => {
@@ -177,6 +182,8 @@ function SubmitButton({
 
 export default function FormBuilder({ formSchema }: FormBuilderProps) {
   const fields = Array.isArray(formSchema?.fields) ? formSchema.fields : [];
+  const [selectValues, setSelectValues] = React.useState<Record<string, string>>({});
+  const [otherValues, setOtherValues] = React.useState<Record<string, string>>({});
 
   return (
     <div className="py-2">
@@ -289,20 +296,57 @@ export default function FormBuilder({ formSchema }: FormBuilderProps) {
                   )}
                   {field.type === 'select' && (
                     <div className="flex items-center gap-x-3 mt-4">
-                      <select
-                        id={fieldId(field?.label, i)}
-                        name={field.label}
-                        className="block w-full rounded-md border py-1.5 text-gray-900 shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 bg-gray-100"
-                        required={field.required ? true : undefined}
-                      >
-                        {(Array.isArray(field?.selectValue) ? field.selectValue : []).map((node, i) => {
-                          return (
-                            <option value={node} key={i}>
-                              {node}
-                            </option>
-                          )
-                        })}
-                      </select>
+                      {(() => {
+                        const options = Array.isArray(field?.selectValue) ? field.selectValue : [];
+                        const fieldKey = field._key || fieldId(field?.label, i);
+                        const selectedValue = selectValues[fieldKey] ?? (options[0] ?? '');
+                        const showOtherInput = Boolean(field.enableOtherOption) && selectedValue === OTHER_OPTION_VALUE;
+
+                        return (
+                          <>
+                            <select
+                              id={fieldId(field?.label, i)}
+                              name={showOtherInput ? undefined : field.label}
+                              value={selectedValue}
+                              onChange={(event) => {
+                                const nextValue = event.currentTarget.value;
+                                setSelectValues((prev) => ({ ...prev, [fieldKey]: nextValue }));
+                                if (nextValue !== OTHER_OPTION_VALUE) {
+                                  setOtherValues((prev) => ({ ...prev, [fieldKey]: '' }));
+                                }
+                              }}
+                              className="block w-full rounded-md border py-1.5 text-gray-900 shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 bg-gray-100"
+                              required={field.required ? true : undefined}
+                            >
+                              {options.map((node, optionIndex) => {
+                                return (
+                                  <option value={node} key={optionIndex}>
+                                    {node}
+                                  </option>
+                                )
+                              })}
+                              {field.enableOtherOption && (
+                                <option value={OTHER_OPTION_VALUE}>{field.otherOptionLabel || 'Other'}</option>
+                              )}
+                            </select>
+
+                            {showOtherInput && (
+                              <input
+                                type="text"
+                                name={field.label}
+                                value={otherValues[fieldKey] || ''}
+                                onChange={(event) => {
+                                  const nextValue = event.currentTarget.value;
+                                  setOtherValues((prev) => ({ ...prev, [fieldKey]: nextValue }));
+                                }}
+                                placeholder={field.otherPlaceholder || 'Please specify'}
+                                className={Styles.formDefaultInput}
+                                required={true}
+                              />
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
                   )}
                   {field.type === 'state' && (
